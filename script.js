@@ -121,74 +121,29 @@ function initUnlockPage() {
   const heading = document.getElementById('unlock-heading');
   const subtitle = document.getElementById('unlock-subtitle');
 
-  const validAnswers = [
-    '3 dec 2025',
-    '03 dec 2025',
-    '3 december 2025',
-    '03 december 2025',
-    '3 dec',
-    '03 dec',
-    '3 december',
-    '03 december',
-    '3/12/2025',
-    '03/12/2025',
-    '3-12-2025',
-    '03-12-2025',
-    'dec 3 2025',
-    'dec 03 2025',
-    'december 3 2025',
-    'december 03 2025'
-  ];
-
-  form.addEventListener('submit', (e) => {
+  form?.addEventListener('submit', (e) => {
     e.preventDefault();
-    const rawVal = input.value.trim().toLowerCase();
-    const val = rawVal.replace(/\s+/g, ' ');
 
-    // Flexible password check: accepts 3 dec, 3 december, 03/12, 3-12, dec 3, 3rd dec, zaib, heer, etc.
-    const isCorrect = validAnswers.includes(val) || 
-      (rawVal.includes('3') && (rawVal.includes('dec') || rawVal.includes('12'))) ||
-      rawVal.includes('december') ||
-      rawVal.includes('zaib') ||
-      rawVal.includes('heer') ||
-      rawVal.includes('love');
-
-    if (isCorrect) {
-      // Correct Password!
-      errorMsg.classList.add('hidden');
-      lockCard.classList.remove('shake');
-      
-      // Animate checkmark
-      if (lockIconContainer) {
-        lockIconContainer.classList.add('unlock-success');
-      }
-      if (lockIcon) lockIcon.classList.add('hidden');
-      if (checkIcon) checkIcon.classList.remove('hidden');
-
-      if (heading) heading.textContent = 'Welcome, Hubby 🤍';
-      if (subtitle) subtitle.textContent = 'Your surprise is waiting...';
-
-      // Disable input
-      input.disabled = true;
-
-      // Automatically open gallery.html after 800ms
-      setTimeout(() => {
-        window.navigateTo('gallery.html');
-      }, 800);
-
-    } else {
-      // Incorrect Password!
-      errorMsg.textContent = 'Not quite... Think about the day our story first began.';
-      errorMsg.classList.remove('hidden');
-      
-      // Trigger shake animation
-      lockCard.classList.remove('shake');
-      void lockCard.offsetWidth; // trigger reflow
-      lockCard.classList.add('shake');
-
-      input.value = '';
-      input.focus();
+    // Hide any previous error
+    if (errorMsg) errorMsg.classList.add('hidden');
+    if (lockCard) lockCard.classList.remove('shake');
+    
+    // Animate checkmark success
+    if (lockIconContainer) {
+      lockIconContainer.classList.add('unlock-success');
     }
+    if (lockIcon) lockIcon.classList.add('hidden');
+    if (checkIcon) checkIcon.classList.remove('hidden');
+
+    if (heading) heading.textContent = 'Welcome, Hubby 🤍';
+    if (subtitle) subtitle.textContent = 'Opening your surprise...';
+
+    if (input) input.disabled = true;
+
+    // Immediately navigate to gallery.html
+    setTimeout(() => {
+      window.navigateTo('gallery.html');
+    }, 200);
   });
 }
 
@@ -424,30 +379,66 @@ function initFinalPage() {
   const lines = ['Today.', 'Tomorrow.', 'Forever.'];
   const lineContainer = document.getElementById('typewriter-container');
   const letterContent = document.getElementById('letter-content');
+  const revealBox = document.getElementById('letter-reveal-box');
+  const revealPrompt = document.getElementById('reveal-prompt');
+  const revealBtn = document.getElementById('reveal-letter-btn');
 
   if (!lineContainer) return;
+
+  let isRevealed = false;
+  let timerId = null;
+
+  function revealLetter() {
+    if (isRevealed) return;
+    isRevealed = true;
+    if (timerId) clearTimeout(timerId);
+
+    // Populate lines cleanly if not fully typed
+    lineContainer.innerHTML = '';
+    lines.forEach(text => {
+      const p = document.createElement('p');
+      p.className = 'font-serif text-3xl md:text-5xl font-bold text-rose-accent my-2';
+      p.textContent = text;
+      lineContainer.appendChild(p);
+    });
+
+    if (revealPrompt) revealPrompt.classList.add('hidden');
+
+    if (letterContent) {
+      letterContent.classList.remove('hidden');
+      letterContent.classList.add('page-fade-in');
+    }
+  }
+
+  // Bind click handlers to reveal letter immediately on click/tap
+  revealBox?.addEventListener('click', revealLetter);
+  revealBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    revealLetter();
+  });
 
   let lineIdx = 0;
 
   function typeLine() {
+    if (isRevealed) return;
+
     if (lineIdx >= lines.length) {
-      // Finished lines, reveal letter content
-      setTimeout(() => {
-        if (letterContent) {
-          letterContent.classList.remove('hidden');
-          letterContent.classList.add('page-fade-in');
-        }
-      }, 500);
+      // Finished lines, reveal letter content automatically after delay
+      timerId = setTimeout(revealLetter, 400);
       return;
     }
 
     const lineText = lines[lineIdx];
     const p = document.createElement('p');
-    p.className = 'font-serif text-3xl md:text-5xl font-bold text-rose-accent my-3 typewriter-line';
+    p.className = 'font-serif text-3xl md:text-5xl font-bold text-rose-accent my-2 typewriter-line';
     lineContainer.appendChild(p);
 
     let charIdx = 0;
     const interval = setInterval(() => {
+      if (isRevealed) {
+        clearInterval(interval);
+        return;
+      }
       if (charIdx < lineText.length) {
         p.textContent = lineText.substring(0, charIdx + 1);
         charIdx++;
@@ -455,11 +446,11 @@ function initFinalPage() {
         clearInterval(interval);
         p.style.borderRight = 'none'; // remove cursor on complete line
         lineIdx++;
-        setTimeout(typeLine, 700);
+        timerId = setTimeout(typeLine, 500);
       }
-    }, 120);
+    }, 100);
   }
 
-  // Start typewriter after 600ms
-  setTimeout(typeLine, 600);
+  // Start typewriter after 300ms
+  timerId = setTimeout(typeLine, 300);
 }
