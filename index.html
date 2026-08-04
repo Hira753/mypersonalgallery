@@ -35,11 +35,11 @@
     </h1>
 
     <!-- Glassmorphism Editorial Action Area -->
-    <div class="relative group">
-      <div class="absolute -inset-4 bg-white/40 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+    <div class="relative group z-30">
+      <div class="absolute -inset-4 bg-white/40 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
       <button 
         onclick="navigateTo('unlock.html')" 
-        class="relative px-12 py-4 sm:px-16 sm:py-5 bg-white/60 backdrop-blur-md border border-white/80 rounded-full shadow-[0_10px_40px_-10px_rgba(153,27,71,0.3)] hover:shadow-[0_15px_50px_-10px_rgba(153,27,71,0.5)] transition-all duration-500 flex items-center justify-center gap-3 group cursor-pointer"
+        class="relative z-10 px-12 py-4 sm:px-16 sm:py-5 bg-white/60 backdrop-blur-md border border-white/80 rounded-full shadow-[0_10px_40px_-10px_rgba(153,27,71,0.3)] hover:shadow-[0_15px_50px_-10px_rgba(153,27,71,0.5)] transition-all duration-500 flex items-center justify-center gap-3 group cursor-pointer pointer-events-auto"
         id="unlock-btn">
         <span class="text-[14px] uppercase tracking-[0.2em] font-semibold text-[#881337] pl-2">✨ Unlock</span>
         <div class="w-8 h-[1.5px] bg-[#991B47] transition-all group-hover:w-12"></div>

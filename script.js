@@ -3,11 +3,38 @@
  * Built with love by Heer 💖
  */
 
+// Global navigation handler immediately available
+window.navigateTo = function(url) {
+  if (!url) return;
+  if (document.body) {
+    document.body.classList.add('page-fade-out');
+  }
+  setTimeout(() => {
+    window.location.href = url;
+  }, 300);
+};
+
 // Initialize common features when DOM loads
 document.addEventListener('DOMContentLoaded', () => {
   initPetals();
   initSparkles();
   initPageTransitions();
+
+  // Bind explicit navigation listeners as fail-safe
+  document.getElementById('unlock-btn')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.navigateTo('unlock.html');
+  });
+
+  document.getElementById('final-surprise-btn')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.navigateTo('final.html');
+  });
+
+  document.getElementById('back-gallery-btn')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.navigateTo('gallery.html');
+  });
 
   // Page specific initializers
   if (document.getElementById('unlock-form')) {
@@ -78,13 +105,6 @@ function initSparkles() {
  * ================================================== */
 function initPageTransitions() {
   document.body.classList.add('page-fade-in');
-
-  window.navigateTo = function(url) {
-    document.body.classList.add('page-fade-out');
-    setTimeout(() => {
-      window.location.href = url;
-    }, 400);
-  };
 }
 
 /* ==================================================
@@ -105,7 +125,19 @@ function initUnlockPage() {
     '3 dec 2025',
     '03 dec 2025',
     '3 december 2025',
-    '03 december 2025'
+    '03 december 2025',
+    '3 dec',
+    '03 dec',
+    '3 december',
+    '03 december',
+    '3/12/2025',
+    '03/12/2025',
+    '3-12-2025',
+    '03-12-2025',
+    'dec 3 2025',
+    'dec 03 2025',
+    'december 3 2025',
+    'december 03 2025'
   ];
 
   form.addEventListener('submit', (e) => {
