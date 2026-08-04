@@ -194,18 +194,20 @@ function initGalleryPage() {
   const grid = document.getElementById('gallery-grid');
   if (!grid) return;
 
-  // Bind click event to every card (pre-rendered or generated)
-  const cards = grid.querySelectorAll('.gallery-card');
-  cards.forEach((card) => {
-    const idx = parseInt(card.getAttribute('data-index') || '0', 10);
-    card.addEventListener('click', () => openLightbox(idx));
-
-    // Ensure videos autoplay muted on mobile
-    const video = card.querySelector('video');
-    if (video) {
-      video.muted = true;
-      video.play().catch(() => {});
+  // Event delegation: clicking on any card opens lightbox full size
+  grid.addEventListener('click', (e) => {
+    const card = e.target.closest('.gallery-card');
+    if (card) {
+      const idx = parseInt(card.getAttribute('data-index') || '0', 10);
+      openLightbox(idx);
     }
+  });
+
+  // Ensure video elements play on mobile
+  const videos = grid.querySelectorAll('video');
+  videos.forEach((video) => {
+    video.muted = true;
+    video.play().catch(() => {});
   });
 
   // Setup Lightbox
