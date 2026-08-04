@@ -112,6 +112,7 @@ function initPageTransitions() {
  * ================================================== */
 function initUnlockPage() {
   const form = document.getElementById('unlock-form');
+  const submitBtn = document.getElementById('unlock-submit-btn');
   const input = document.getElementById('password-input');
   const errorMsg = document.getElementById('error-message');
   const lockCard = document.getElementById('lock-card');
@@ -121,8 +122,8 @@ function initUnlockPage() {
   const heading = document.getElementById('unlock-heading');
   const subtitle = document.getElementById('unlock-subtitle');
 
-  form?.addEventListener('submit', (e) => {
-    e.preventDefault();
+  const doUnlock = (e) => {
+    if (e) e.preventDefault();
 
     // Hide any previous error
     if (errorMsg) errorMsg.classList.add('hidden');
@@ -143,8 +144,11 @@ function initUnlockPage() {
     // Immediately navigate to gallery.html
     setTimeout(() => {
       window.navigateTo('gallery.html');
-    }, 200);
-  });
+    }, 150);
+  };
+
+  form?.addEventListener('submit', doUnlock);
+  submitBtn?.addEventListener('click', doUnlock);
 }
 
 /* ==================================================
