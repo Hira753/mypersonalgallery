@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Beginning - Zaibiiii's Surprise 💖</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-[#FCEEF5] flex flex-col items-center justify-center min-h-screen relative overflow-hidden px-4 font-sans">
+
+  <!-- Soft Gradient Vignette -->
+  <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-[#D8A7B1]/10"></div>
+
+  <!-- Glowing Ambient Background -->
+  <div class="glow-orb w-80 h-80 bg-pink-200 top-20 right-10"></div>
+  <div class="glow-orb w-96 h-96 bg-rose-200 bottom-10 left-10"></div>
+
+  <!-- Editorial Top Eyebrow -->
+  <div class="mb-6 text-center z-20">
+    <span class="block text-[10px] uppercase tracking-[0.4em] text-[#991B47] font-bold opacity-100 mb-1">
+      Special Memory Access
+    </span>
+    <div class="h-[1.5px] w-12 bg-[#991B47] mx-auto opacity-70"></div>
+  </div>
+
+  <!-- Password Card -->
+  <main class="relative z-20 w-full max-w-md mx-auto">
+    <div class="bg-white/60 backdrop-blur-md border border-white/80 rounded-3xl p-8 md:p-10 text-center shadow-[0_10px_40px_-10px_rgba(153,27,71,0.25)] transition-all duration-300" id="lock-card">
+
+      <!-- Animated Lock Icon Container -->
+      <div class="lock-icon-container" id="lock-icon-container">
+        <div class="lock-pulse"></div>
+        
+        <!-- Lock Icon SVG -->
+        <svg id="lock-icon" class="w-9 h-9 text-[#881337] transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a5 5 0 00-10 0v4h10z" />
+        </svg>
+
+        <!-- Checkmark SVG (hidden initially) -->
+        <svg id="check-icon" class="w-10 h-10 text-emerald-600 hidden transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+
+      <!-- Heading -->
+      <h2 class="font-serif text-3xl sm:text-4xl italic font-bold text-[#881337] mb-2" id="unlock-heading">
+        The Beginning
+      </h2>
+
+      <!-- Subtitle -->
+      <p class="font-sans text-xs sm:text-sm text-[#701A33] mb-8 font-normal leading-relaxed" id="unlock-subtitle">
+        The key isn't a password...<br />
+        <span class="font-semibold text-[#881337]">It's the date our story first began.</span>
+      </p>
+
+      <!-- Form -->
+      <form id="unlock-form" class="space-y-4">
+        <div>
+          <input 
+            type="text" 
+            id="password-input" 
+            class="input-luxury" 
+            placeholder="Enter the special date..." 
+            autocomplete="off"
+            required 
+          />
+        </div>
+
+        <!-- Wrong Password Error Message -->
+        <div id="error-message" class="hidden text-xs sm:text-sm font-medium text-rose-600 bg-pink-100/90 py-2.5 px-4 rounded-xl border border-pink-300/50">
+          Not quite... Think about the day our story first began.
+        </div>
+
+        <!-- Submit Button -->
+        <div>
+          <button type="submit" class="btn-luxury w-full py-4 text-sm uppercase tracking-[0.15em] font-medium mt-2">
+            Unlock Memory 🌸
+          </button>
+        </div>
+      </form>
+
+      <!-- Hint Section -->
+      <div class="mt-8 pt-6 border-t border-[#991B47]/30">
+        <p class="text-xs text-[#881337] font-medium italic">
+          💡 Hint: The day we first talked.
+        </p>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Surprise for Zaibiiii 💖</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-[#FCEEF5] flex flex-col items-center justify-center min-h-screen relative overflow-hidden font-sans">
+
+  <!-- Soft Gradient Vignette -->
+  <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-[#D8A7B1]/10"></div>
+
+  <!-- Soft Pink Overlay -->
+  <div class="fixed inset-0 bg-pink-100/20 backdrop-blur-[1px] pointer-events-none z-10"></div>
+
+  <!-- Glowing Ambient Light Orbs -->
+  <div class="glow-orb w-96 h-96 bg-pink-200 top-10 left-10"></div>
+  <div class="glow-orb w-[30rem] h-[30rem] bg-rose-200 bottom-10 right-10"></div>
+
+  <!-- Main Hero Editorial Content -->
+  <main class="relative z-20 text-center px-6 py-12 max-w-2xl mx-auto flex flex-col items-center justify-center">
+    
+    <!-- Editorial Eyebrow & Hairline Divider -->
+    <div class="mb-6 space-y-3">
+      <span class="block text-[11px] uppercase tracking-[0.4em] text-[#991B47] font-bold opacity-100">
+        A little surprise, made especially for you
+      </span>
+      <div class="h-[1.5px] w-14 bg-[#991B47] mx-auto opacity-70"></div>
+    </div>
+
+    <!-- Editorial Serif Title -->
+    <h1 class="font-serif text-6xl sm:text-8xl md:text-[110px] leading-none text-[#881337] italic font-bold tracking-tighter mb-10 select-none drop-shadow-sm">
+      Zaibiiii <span class="text-3xl sm:text-5xl align-top inline-block mt-4">💖</span>
+    </h1>
+
+    <!-- Glassmorphism Editorial Action Area -->
+    <div class="relative group">
+      <div class="absolute -inset-4 bg-white/40 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+      <button 
+        onclick="navigateTo('unlock.html')" 
+        class="relative px-12 py-4 sm:px-16 sm:py-5 bg-white/60 backdrop-blur-md border border-white/80 rounded-full shadow-[0_10px_40px_-10px_rgba(153,27,71,0.3)] hover:shadow-[0_15px_50px_-10px_rgba(153,27,71,0.5)] transition-all duration-500 flex items-center justify-center gap-3 group cursor-pointer"
+        id="unlock-btn">
+        <span class="text-[14px] uppercase tracking-[0.2em] font-semibold text-[#881337] pl-2">✨ Unlock</span>
+        <div class="w-8 h-[1.5px] bg-[#991B47] transition-all group-hover:w-12"></div>
+      </button>
+    </div>
+
+  </main>
+
+  <!-- Subtle Side Label -->
+  <div class="hidden sm:block absolute right-10 top-1/2 -translate-y-1/2 rotate-90 origin-right z-20 pointer-events-none">
+    <span class="text-[10px] uppercase tracking-[0.5em] text-[#991B47] font-semibold opacity-80 whitespace-nowrap">
+      Premium Experience • Volume 01
+    </span>
+  </div>
+
+  <!-- External Script -->
+  <script src="script.js"></script>
+</body>
+</html>
