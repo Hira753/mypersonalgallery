@@ -194,7 +194,19 @@ function initGalleryPage() {
   const grid = document.getElementById('gallery-grid');
   if (!grid) return;
 
-  // Event delegation: clicking on any card opens lightbox full size
+  // Bind click listener directly to every card
+  const cards = grid.querySelectorAll('.gallery-card');
+  cards.forEach((card, index) => {
+    card.setAttribute('data-index', index);
+    card.style.cursor = 'pointer';
+
+    card.addEventListener('click', (e) => {
+      e.preventDefault();
+      openLightbox(index);
+    });
+  });
+
+  // Backup delegation handler
   grid.addEventListener('click', (e) => {
     const card = e.target.closest('.gallery-card');
     if (card) {
@@ -223,9 +235,18 @@ function initLightbox() {
 
   if (!backdrop) return;
 
-  closeBtn?.addEventListener('click', closeLightbox);
-  prevBtn?.addEventListener('click', showPrevImage);
-  nextBtn?.addEventListener('click', showNextImage);
+  closeBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeLightbox();
+  });
+  prevBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    showPrevImage();
+  });
+  nextBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    showNextImage();
+  });
 
   backdrop.addEventListener('click', (e) => {
     if (e.target === backdrop) closeLightbox();
@@ -263,12 +284,19 @@ function initLightbox() {
 }
 
 function openLightbox(index) {
+  if (typeof index !== 'number' || index < 0 || index >= galleryImages.length) {
+    index = 0;
+  }
   currentImageIndex = index;
   updateLightboxContent();
 
   const backdrop = document.getElementById('lightbox-backdrop');
-  if (backdrop) backdrop.classList.add('active');
+  if (backdrop) {
+    backdrop.classList.add('active');
+  }
 }
+
+window.openLightbox = openLightbox;
 
 function closeLightbox() {
   const backdrop = document.getElementById('lightbox-backdrop');
