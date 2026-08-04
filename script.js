@@ -11,7 +11,7 @@ window.navigateTo = function(url) {
   }
   setTimeout(() => {
     window.location.href = url;
-  }, 300);
+  }, 150);
 };
 
 // Initialize common features when DOM loads
@@ -142,9 +142,18 @@ function initUnlockPage() {
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const val = input.value.trim().toLowerCase().replace(/\s+/g, ' ');
+    const rawVal = input.value.trim().toLowerCase();
+    const val = rawVal.replace(/\s+/g, ' ');
 
-    if (validAnswers.includes(val)) {
+    // Flexible password check: accepts 3 dec, 3 december, 03/12, 3-12, dec 3, 3rd dec, zaib, heer, etc.
+    const isCorrect = validAnswers.includes(val) || 
+      (rawVal.includes('3') && (rawVal.includes('dec') || rawVal.includes('12'))) ||
+      rawVal.includes('december') ||
+      rawVal.includes('zaib') ||
+      rawVal.includes('heer') ||
+      rawVal.includes('love');
+
+    if (isCorrect) {
       // Correct Password!
       errorMsg.classList.add('hidden');
       lockCard.classList.remove('shake');
@@ -162,10 +171,10 @@ function initUnlockPage() {
       // Disable input
       input.disabled = true;
 
-      // Automatically open gallery.html after 1.5 seconds
+      // Automatically open gallery.html after 800ms
       setTimeout(() => {
         window.navigateTo('gallery.html');
-      }, 1500);
+      }, 800);
 
     } else {
       // Incorrect Password!

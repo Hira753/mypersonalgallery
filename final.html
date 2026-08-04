@@ -88,12 +88,13 @@
 
       <!-- Back to Gallery Button -->
       <div class="mt-12 pt-6 relative z-20">
-        <button 
-          onclick="navigateTo('gallery.html')" 
+        <a 
+          href="gallery.html"
+          onclick="navigateTo('gallery.html'); return false;" 
           id="back-gallery-btn"
-          class="btn-outline-luxury text-xs sm:text-sm uppercase tracking-[0.15em] px-7 py-3.5 cursor-pointer relative z-10 pointer-events-auto">
+          class="btn-outline-luxury text-xs sm:text-sm uppercase tracking-[0.15em] px-7 py-3.5 cursor-pointer relative z-10 pointer-events-auto inline-flex items-center justify-center text-decoration-none">
           ← Back to Gallery
-        </button>
+        </a>
       </div>
 
     </div>
