@@ -30,10 +30,149 @@
       </p>
     </header>
 
-    <!-- 30 PHOTO GALLERY GRID (STRICTLY 3 COLUMNS ON ALL SCREENS) -->
+    <!-- 30 PHOTO & VIDEO GALLERY GRID -->
     <section>
       <div class="gallery-grid-container" id="gallery-grid">
-        <!-- 30 Photos populated dynamically by script.js -->
+        <!-- Media items pre-rendered for instant load -->
+        <div class="gallery-card" data-index="0">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785769359/Screenshot_2026-08-03_200055_oioh9w.png" alt="Precious Moments" loading="eager" referrerPolicy="no-referrer" />
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Precious Moments</div></div></div>
+        </div>
+        <div class="gallery-card" data-index="1">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785769667/why_zaibii-2026-05-28T23-19-42_xjqyfs.jpg" alt="Why Zaibii" loading="eager" referrerPolicy="no-referrer" />
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Why Zaibii</div></div></div>
+        </div>
+        <div class="gallery-card" data-index="2">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785769415/Screenshot_2026-08-03_200156_bddugf.png" alt="Sweet Conversations" loading="eager" referrerPolicy="no-referrer" />
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Sweet Conversations</div></div></div>
+        </div>
+        <div class="gallery-card" data-index="3">
+          <video src="https://res.cloudinary.com/irbsm5bs/video/upload/v1785769941/zohaibsultan145_7565282984262208775_ntoy40.mp4" muted playsinline loop autoplay preload="auto" class="w-full h-full object-cover pointer-events-none"></video>
+          <span class="absolute top-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-md font-semibold z-10">▶ Video</span>
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Special Video Memory</div></div></div>
+        </div>
+        <div class="gallery-card" data-index="4">
+          <video src="https://res.cloudinary.com/irbsm5bs/video/upload/v1785769736/zohaibsultan145_7644957607739854100_gs0efl.mp4" muted playsinline loop autoplay preload="auto" class="w-full h-full object-cover pointer-events-none"></video>
+          <span class="absolute top-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-md font-semibold z-10">▶ Video</span>
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Unforgettable Days</div></div></div>
+        </div>
+        <div class="gallery-card" data-index="5">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785770541/Screenshot_2026-08-03_202015_htazvo.png" alt="Cute Snaps" loading="eager" referrerPolicy="no-referrer" />
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Cute Snaps</div></div></div>
+        </div>
+        <div class="gallery-card" data-index="6">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785770613/ChatGPT_Image_Aug_3_2026_08_21_50_PM_odamjy.png" alt="Dreamy Vibe" loading="eager" referrerPolicy="no-referrer" />
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Dreamy Vibe</div></div></div>
+        </div>
+        <div class="gallery-card" data-index="7">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785771210/ChatGPT_Image_Aug_3_2026_08_31_46_PM_mhhs0c.png" alt="Magical Times" loading="eager" referrerPolicy="no-referrer" />
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Magical Times</div></div></div>
+        </div>
+        <div class="gallery-card" data-index="8">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785770335/758350395_17954020074197793_7502221706327146486_n_code8f.jpg" alt="Heartbeat" loading="eager" referrerPolicy="no-referrer" />
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Heartbeat</div></div></div>
+        </div>
+        <div class="gallery-card" data-index="9">
+          <video src="https://res.cloudinary.com/irbsm5bs/video/upload/v1785771410/zohaibsultan145_7654991371161308437_lqlrmh.mp4" muted playsinline loop autoplay preload="auto" class="w-full h-full object-cover pointer-events-none"></video>
+          <span class="absolute top-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-md font-semibold z-10">▶ Video</span>
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Fun Reel</div></div></div>
+        </div>
+        <div class="gallery-card" data-index="10">
+          <video src="https://res.cloudinary.com/irbsm5bs/video/upload/v1785780588/WhatsApp_Video_2026-08-03_at_10.10.22_PM_ux53tr.mp4" muted playsinline loop autoplay preload="auto" class="w-full h-full object-cover pointer-events-none"></video>
+          <span class="absolute top-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-md font-semibold z-10">▶ Video</span>
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Sweet Moments</div></div></div>
+        </div>
+        <div class="gallery-card" data-index="11">
+          <video src="https://res.cloudinary.com/irbsm5bs/video/upload/v1785780564/WhatsApp_Video_2026-08-03_at_10.10.21_PM_c5ijxg.mp4" muted playsinline loop autoplay preload="auto" class="w-full h-full object-cover pointer-events-none"></video>
+          <span class="absolute top-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-md font-semibold z-10">▶ Video</span>
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Pure Joy</div></div></div>
+        </div>
+        <div class="gallery-card" data-index="12">
+          <video src="https://res.cloudinary.com/irbsm5bs/video/upload/v1785876656/WhatsApp_Video_2026-08-05_at_1.50.15_AM_m2yoiw.mp4" muted playsinline loop autoplay preload="auto" class="w-full h-full object-cover pointer-events-none"></video>
+          <span class="absolute top-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-md font-semibold z-10">▶ Video</span>
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Midnight Love</div></div></div>
+        </div>
+        <div class="gallery-card" data-index="13">
+          <video src="https://res.cloudinary.com/irbsm5bs/video/upload/v1785876570/WhatsApp_Video_2026-08-05_at_1.39.34_AM_jihrx1.mp4" muted playsinline loop autoplay preload="auto" class="w-full h-full object-cover pointer-events-none"></video>
+          <span class="absolute top-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-md font-semibold z-10">▶ Video</span>
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Cherished Times</div></div></div>
+        </div>
+        <div class="gallery-card" data-index="14">
+          <video src="https://res.cloudinary.com/irbsm5bs/video/upload/v1785782576/1785782531190_instaPV_m0wzhm.mp4" muted playsinline loop autoplay preload="auto" class="w-full h-full object-cover pointer-events-none"></video>
+          <span class="absolute top-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-md font-semibold z-10">▶ Video</span>
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Insta Special</div></div></div>
+        </div>
+        <div class="gallery-card" data-index="15">
+          <video src="https://res.cloudinary.com/irbsm5bs/video/upload/v1785782647/1785782612887_instaPV_ufkb64.mp4" muted playsinline loop autoplay preload="auto" class="w-full h-full object-cover pointer-events-none"></video>
+          <span class="absolute top-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-md font-semibold z-10">▶ Video</span>
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Golden Memory</div></div></div>
+        </div>
+        <div class="gallery-card" data-index="16">
+          <video src="https://res.cloudinary.com/irbsm5bs/video/upload/v1785876556/WhatsApp_Video_2026-08-05_at_1.39.33_AM_kg5xab.mp4" muted playsinline loop autoplay preload="auto" class="w-full h-full object-cover pointer-events-none"></video>
+          <span class="absolute top-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-md font-semibold z-10">▶ Video</span>
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Soft Smiles</div></div></div>
+        </div>
+        <div class="gallery-card" data-index="17">
+          <video src="https://res.cloudinary.com/irbsm5bs/video/upload/v1785782567/1785782514728_instaPV_tsaisx.mp4" muted playsinline loop autoplay preload="auto" class="w-full h-full object-cover pointer-events-none"></video>
+          <span class="absolute top-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-md font-semibold z-10">▶ Video</span>
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Cutest Video</div></div></div>
+        </div>
+        <div class="gallery-card" data-index="18">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785780527/WhatsApp_Image_2026-08-03_at_10.10.16_PM_mlh5la.jpg" alt="Lovely Photo" loading="eager" referrerPolicy="no-referrer" />
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Lovely Photo</div></div></div>
+        </div>
+        <div class="gallery-card" data-index="19">
+          <video src="https://res.cloudinary.com/irbsm5bs/video/upload/v1785876547/WhatsApp_Video_2026-08-05_at_1.39.32_AM_jjtfw6.mp4" muted playsinline loop autoplay preload="auto" class="w-full h-full object-cover pointer-events-none"></video>
+          <span class="absolute top-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-md font-semibold z-10">▶ Video</span>
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Sweet Glance</div></div></div>
+        </div>
+        <div class="gallery-card" data-index="20">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785781932/Screenshot_2026-08-03_233031_jncmbt.png" alt="Chat Memories" loading="eager" referrerPolicy="no-referrer" />
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Chat Memories</div></div></div>
+        </div>
+        <div class="gallery-card" data-index="21">
+          <video src="https://res.cloudinary.com/irbsm5bs/video/upload/v1785780506/WhatsApp_Video_2026-08-03_at_10.10.16_PM_opkgsy.mp4" muted playsinline loop autoplay preload="auto" class="w-full h-full object-cover pointer-events-none"></video>
+          <span class="absolute top-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-md font-semibold z-10">▶ Video</span>
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Best Time</div></div></div>
+        </div>
+        <div class="gallery-card" data-index="22">
+          <video src="https://res.cloudinary.com/irbsm5bs/video/upload/v1785876511/WhatsApp_Video_2026-08-05_at_1.39.30_AM_kmj6uy.mp4" muted playsinline loop autoplay preload="auto" class="w-full h-full object-cover pointer-events-none"></video>
+          <span class="absolute top-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-md font-semibold z-10">▶ Video</span>
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Endless Smile</div></div></div>
+        </div>
+        <div class="gallery-card" data-index="23">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785784023/Screenshot_2026-08-04_000500_rqskse.png" alt="Late Night Thought" loading="eager" referrerPolicy="no-referrer" />
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Late Night Thought</div></div></div>
+        </div>
+        <div class="gallery-card" data-index="24">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785781754/Screenshot_2026-08-03_232723_hwgldq.png" alt="Heartfelt Screenshot" loading="eager" referrerPolicy="no-referrer" />
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Heartfelt Screenshot</div></div></div>
+        </div>
+        <div class="gallery-card" data-index="25">
+          <video src="https://res.cloudinary.com/irbsm5bs/video/upload/v1785781639/zohaibsultan145_7614728716324801812_lca7de.mp4" muted playsinline loop autoplay preload="auto" class="w-full h-full object-cover pointer-events-none"></video>
+          <span class="absolute top-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-md font-semibold z-10">▶ Video</span>
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Wonderful Reel</div></div></div>
+        </div>
+        <div class="gallery-card" data-index="26">
+          <video src="https://res.cloudinary.com/irbsm5bs/video/upload/v1785780603/WhatsApp_Video_2026-08-03_at_10.19.15_PM_1_v3ldw1.mp4" muted playsinline loop autoplay preload="auto" class="w-full h-full object-cover pointer-events-none"></video>
+          <span class="absolute top-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-md font-semibold z-10">▶ Video</span>
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Special Surprise</div></div></div>
+        </div>
+        <div class="gallery-card" data-index="27">
+          <video src="https://res.cloudinary.com/irbsm5bs/video/upload/v1785772057/zohaibsultan145_7465042574294699271_w7rwfq.mp4" muted playsinline loop autoplay preload="auto" class="w-full h-full object-cover pointer-events-none"></video>
+          <span class="absolute top-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-md font-semibold z-10">▶ Video</span>
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Adorable Video</div></div></div>
+        </div>
+        <div class="gallery-card" data-index="28">
+          <video src="https://res.cloudinary.com/irbsm5bs/video/upload/v1785772048/zohaibsultan145_7557821075552324882_yys4w8.mp4" muted playsinline loop autoplay preload="auto" class="w-full h-full object-cover pointer-events-none"></video>
+          <span class="absolute top-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-md font-semibold z-10">▶ Video</span>
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Magic Moments</div></div></div>
+        </div>
+        <div class="gallery-card" data-index="29">
+          <video src="https://res.cloudinary.com/irbsm5bs/video/upload/v1785771783/zohaibsultan145_7560336660379045138_ezbrje.mp4" muted playsinline loop autoplay preload="auto" class="w-full h-full object-cover pointer-events-none"></video>
+          <span class="absolute top-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-md font-semibold z-10">▶ Video</span>
+          <div class="gallery-card-overlay"><div><div style="font-size: 0.8rem; font-weight: 600;">Forever Yours</div></div></div>
+        </div>
       </div>
     </section>
 
@@ -49,24 +188,6 @@
     </div>
 
   </main>
-
-  <!-- WELCOME POPUP MODAL -->
-  <div id="popup-backdrop" class="popup-backdrop">
-    <div class="bg-white/95 backdrop-blur-md border border-white/90 rounded-3xl popup-modal p-6 sm:p-10 text-center relative shadow-[0_15px_50px_-10px_rgba(153,27,71,0.35)]">
-      <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-pink-100 flex items-center justify-center text-3xl shadow-inner">
-        🫶
-      </div>
-      <h3 class="font-serif text-2xl sm:text-3xl italic font-bold text-[#881337] mb-3">
-        Hey Hubby 🫶
-      </h3>
-      <p class="font-sans text-sm sm:text-base text-[#701A33] leading-relaxed mb-8 font-medium">
-        I made this little surprise just for you.💋💗
-      </p>
-      <button id="popup-continue-btn" class="btn-luxury w-full py-4 text-sm uppercase tracking-[0.15em] font-medium">
-        Continue →
-      </button>
-    </div>
-  </div>
 
   <!-- LIGHTBOX FULLSCREEN MODAL -->
   <div id="lightbox-backdrop" class="lightbox-backdrop">

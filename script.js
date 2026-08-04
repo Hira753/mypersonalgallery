@@ -194,47 +194,22 @@ function initGalleryPage() {
   const grid = document.getElementById('gallery-grid');
   if (!grid) return;
 
-  // Render 30 Photos & Videos into Grid
-  grid.innerHTML = '';
-  galleryImages.forEach((img, index) => {
-    const card = document.createElement('div');
-    card.className = 'gallery-card';
-    card.setAttribute('data-index', index);
+  // Bind click event to every card (pre-rendered or generated)
+  const cards = grid.querySelectorAll('.gallery-card');
+  cards.forEach((card) => {
+    const idx = parseInt(card.getAttribute('data-index') || '0', 10);
+    card.addEventListener('click', () => openLightbox(idx));
 
-    if (img.isVideo || img.url.includes('.mp4')) {
-      card.innerHTML = `
-        <video src="${img.url}" muted playsinline loop autoplay class="w-full h-full object-cover pointer-events-none"></video>
-        <span class="absolute top-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-md font-semibold z-10 flex items-center gap-1">
-          ▶ Video
-        </span>
-        <div class="gallery-card-overlay">
-          <div>
-            <div style="font-size: 0.8rem; font-weight: 600;">${img.title}</div>
-          </div>
-        </div>
-      `;
-    } else {
-      card.innerHTML = `
-        <img src="${img.url}" alt="${img.title}" loading="lazy" referrerPolicy="no-referrer" />
-        <div class="gallery-card-overlay">
-          <div>
-            <div style="font-size: 0.8rem; font-weight: 600;">${img.title}</div>
-          </div>
-        </div>
-      `;
+    // Ensure videos autoplay muted on mobile
+    const video = card.querySelector('video');
+    if (video) {
+      video.muted = true;
+      video.play().catch(() => {});
     }
-
-    card.addEventListener('click', () => openLightbox(index));
-    grid.appendChild(card);
   });
 
   // Setup Lightbox
   initLightbox();
-
-  // Welcome Popup Logic (Wait 2 seconds)
-  setTimeout(() => {
-    openWelcomePopup();
-  }, 2000);
 }
 
 /* --- LIGHTBOX MODAL --- */
@@ -350,32 +325,6 @@ function updateLightboxContent() {
   if (counterElem) counterElem.textContent = `${currentImageIndex + 1} of ${galleryImages.length}`;
 }
 
-/* --- WELCOME POPUP --- */
-function openWelcomePopup() {
-  const mainGallery = document.getElementById('gallery-main');
-  const popupBackdrop = document.getElementById('popup-backdrop');
-  const continueBtn = document.getElementById('popup-continue-btn');
-
-  if (mainGallery) {
-    mainGallery.style.filter = 'blur(10px)';
-    mainGallery.style.transition = 'filter 0.5s ease';
-  }
-
-  if (popupBackdrop) {
-    popupBackdrop.classList.add('active');
-  }
-
-  continueBtn?.addEventListener('click', () => {
-    // Close popup
-    if (popupBackdrop) popupBackdrop.classList.remove('active');
-    
-    // Remove blur
-    if (mainGallery) mainGallery.style.filter = 'none';
-  }, { once: true });
-}
-
-// Music functionality removed per user request
-
 /* ==================================================
  * 5. PAGE 4: FINAL SURPRISE TYPEWRITER & REVEAL
  * ================================================== */
@@ -383,9 +332,6 @@ function initFinalPage() {
   const lines = ['Today.', 'Tomorrow.', 'Forever.'];
   const lineContainer = document.getElementById('typewriter-container');
   const letterContent = document.getElementById('letter-content');
-  const revealBox = document.getElementById('letter-reveal-box');
-  const revealPrompt = document.getElementById('reveal-prompt');
-  const revealBtn = document.getElementById('reveal-letter-btn');
 
   if (!lineContainer) return;
 
@@ -406,20 +352,14 @@ function initFinalPage() {
       lineContainer.appendChild(p);
     });
 
-    if (revealPrompt) revealPrompt.classList.add('hidden');
-
     if (letterContent) {
       letterContent.classList.remove('hidden');
       letterContent.classList.add('page-fade-in');
     }
   }
 
-  // Bind click handlers to reveal letter immediately on click/tap
-  revealBox?.addEventListener('click', revealLetter);
-  revealBtn?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    revealLetter();
-  });
+  // Bind click handler anywhere on container to reveal letter instantly if clicked
+  lineContainer.addEventListener('click', revealLetter);
 
   let lineIdx = 0;
 
@@ -427,8 +367,8 @@ function initFinalPage() {
     if (isRevealed) return;
 
     if (lineIdx >= lines.length) {
-      // Finished lines, reveal letter content automatically after delay
-      timerId = setTimeout(revealLetter, 400);
+      // Finished typing lines, reveal letter content automatically
+      timerId = setTimeout(revealLetter, 300);
       return;
     }
 
@@ -450,11 +390,11 @@ function initFinalPage() {
         clearInterval(interval);
         p.style.borderRight = 'none'; // remove cursor on complete line
         lineIdx++;
-        timerId = setTimeout(typeLine, 500);
+        timerId = setTimeout(typeLine, 400);
       }
-    }, 100);
+    }, 90);
   }
 
-  // Start typewriter after 300ms
-  timerId = setTimeout(typeLine, 300);
+  // Start typewriter after 200ms
+  timerId = setTimeout(typeLine, 200);
 }
