@@ -48,8 +48,8 @@ window.handleStart = handleStart;
 window.handleUnlock = handleStart;
 window.doUnlockMemory = handleStart;
 
-// Initialize common features when DOM loads
-document.addEventListener('DOMContentLoaded', () => {
+// Initialize common features when DOM loads (or immediately if already parsed)
+function runInit() {
   initPetals();
   initSparkles();
   initPageTransitions();
@@ -85,7 +85,14 @@ document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('typewriter-container')) {
     initFinalPage();
   }
-});
+  initLightbox();
+}
+
+if (document.readyState === 'interactive' || document.readyState === 'complete') {
+  runInit();
+} else {
+  document.addEventListener('DOMContentLoaded', runInit);
+}
 
 /* ==================================================
  * 1. FLOATING PETALS & SPARKLES ANIMATION
@@ -334,8 +341,15 @@ function initLightbox() {
 
 function openLightbox(index) {
   initLightbox();
+  if (typeof index === 'string') {
+    index = parseInt(index, 10);
+  }
+  if (isNaN(index)) {
+    index = 0;
+  }
+  
   const mediaList = getActiveMediaList();
-  if (typeof index !== 'number' || index < 0 || index >= mediaList.length) {
+  if (index < 0 || index >= mediaList.length) {
     index = 0;
   }
 
@@ -380,11 +394,13 @@ function showNextImage() {
   updateLightboxContent();
 }
 
-// Ensure all lightbox functions are attached to window
+// Ensure all lightbox functions are attached globally to window immediately
 window.openLightbox = openLightbox;
 window.closeLightbox = closeLightbox;
 window.showPrevImage = showPrevImage;
 window.showNextImage = showNextImage;
+window.initGalleryPage = initGalleryPage;
+window.initLightbox = initLightbox;
 
 function updateLightboxContent() {
   const imgElem = document.getElementById('lightbox-img');
