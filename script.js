@@ -148,18 +148,22 @@ function initUnlockPage() {
     norm = norm.replace(/^3rd\b/, '3');
     norm = norm.replace(/\bdecember\b/, 'dec');
 
+    // Check against 3 dec 2025
     const isValid = (
-      norm === '3 dec 2026' ||
-      norm === '3 12 2026' ||
-      norm === '3dec2026' ||
-      norm === '3dec 2026'
+      norm === '3 dec 2025' ||
+      norm === '3 12 2025' ||
+      norm === '3dec2025' ||
+      norm === '3dec 2025' ||
+      norm === '03 dec 2025' ||
+      norm === '3/12/2025' ||
+      norm === '3-12-2025'
     );
 
     if (!isValid) {
       const err = document.getElementById('error-message') || errorMsg;
       const card = document.getElementById('lock-card') || lockCard;
       if (err) {
-        err.textContent = 'Incorrect date! Only "3 dec 2026" can unlock this memory 🔒💖';
+        err.textContent = 'Incorrect date! Only "3 dec 2025" can unlock this memory 🔒💖';
         err.classList.remove('hidden');
       }
       if (card) {
@@ -193,17 +197,39 @@ function initUnlockPage() {
 
     if (inputElem) inputElem.disabled = true;
 
+    // Direct navigate to gallery.html
     setTimeout(() => {
-      window.navigateTo('gallery.html');
-    }, 250);
+      if (typeof window.navigateTo === 'function') {
+        window.navigateTo('gallery.html');
+      } else {
+        window.location.href = 'gallery.html';
+      }
+    }, 200);
 
     return false;
   };
 
   window.doUnlockMemory = doUnlock;
 
-  form?.addEventListener('submit', doUnlock);
-  submitBtn?.addEventListener('click', doUnlock);
+  if (form) {
+    form.onsubmit = (e) => {
+      doUnlock(e);
+      return false;
+    };
+  }
+  if (submitBtn) {
+    submitBtn.onclick = (e) => {
+      doUnlock(e);
+      return false;
+    };
+  }
+  if (input) {
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        doUnlock(e);
+      }
+    });
+  }
 }
 
 /* ==================================================
