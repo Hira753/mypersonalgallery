@@ -48,6 +48,17 @@ window.handleStart = handleStart;
 window.handleUnlock = handleStart;
 window.doUnlockMemory = handleStart;
 
+// Global document delegated click listener guarantees clicks on gallery cards work everywhere
+document.addEventListener('click', (e) => {
+  const card = e.target.closest('.gallery-card');
+  if (card) {
+    const idxAttr = card.getAttribute('data-index');
+    if (idxAttr !== null) {
+      window.openLightbox(idxAttr);
+    }
+  }
+}, true);
+
 // Initialize common features when DOM loads (or immediately if already parsed)
 function runInit() {
   initPetals();
@@ -217,15 +228,17 @@ function getActiveMediaList() {
     const img = card.querySelector('img');
     const video = card.querySelector('video');
     if (img) {
+      const src = img.src || img.getAttribute('src') || '';
       list.push({
-        url: img.src,
+        url: src,
         isVideo: false,
         title: isMemories ? `Chat Memory #${idx + 1}` : (galleryImages[idx]?.title || `Memory #${idx + 1}`),
         desc: isMemories ? `Special chat screenshot saved forever. 💬🤍` : (galleryImages[idx]?.desc || `A beautiful memory with Zaibiii. 🌸`)
       });
     } else if (video) {
+      const src = video.src || video.getAttribute('src') || '';
       list.push({
-        url: video.src,
+        url: src,
         isVideo: true,
         title: galleryImages[idx]?.title || `Video Memory #${idx + 1}`,
         desc: galleryImages[idx]?.desc || `Unforgettable video memory. ✨`
@@ -245,15 +258,6 @@ function initGalleryPage() {
   cards.forEach((card, index) => {
     card.setAttribute('data-index', index);
     card.style.cursor = 'pointer';
-  });
-
-  // Delegated click handler on grid
-  grid.addEventListener('click', (e) => {
-    const card = e.target.closest('.gallery-card');
-    if (card) {
-      const idx = parseInt(card.getAttribute('data-index') || '0', 10);
-      openLightbox(idx);
-    }
   });
 
   // Ensure video elements play on mobile grid
@@ -339,11 +343,22 @@ function initLightbox() {
   }
 }
 
-function openLightbox(index) {
+function openLightbox(target) {
   initLightbox();
-  if (typeof index === 'string') {
-    index = parseInt(index, 10);
+  let index = 0;
+  if (typeof target === 'number') {
+    index = target;
+  } else if (typeof target === 'string') {
+    index = parseInt(target, 10);
+  } else if (target && target.nodeType === 1) {
+    index = parseInt(target.getAttribute('data-index') || '0', 10);
+  } else if (target && target.target) {
+    const card = target.target.closest('.gallery-card');
+    if (card) {
+      index = parseInt(card.getAttribute('data-index') || '0', 10);
+    }
   }
+  
   if (isNaN(index)) {
     index = 0;
   }
@@ -359,13 +374,23 @@ function openLightbox(index) {
   const backdrop = document.getElementById('lightbox-backdrop');
   if (backdrop) {
     backdrop.classList.add('active');
+    backdrop.style.display = 'flex';
+    backdrop.style.visibility = 'visible';
+    backdrop.style.opacity = '1';
+    backdrop.style.pointerEvents = 'auto';
     document.body.style.overflow = 'hidden';
   }
 }
 
 function closeLightbox() {
   const backdrop = document.getElementById('lightbox-backdrop');
-  if (backdrop) backdrop.classList.remove('active');
+  if (backdrop) {
+    backdrop.classList.remove('active');
+    backdrop.style.display = 'none';
+    backdrop.style.visibility = 'hidden';
+    backdrop.style.opacity = '0';
+    backdrop.style.pointerEvents = 'none';
+  }
   document.body.style.overflow = '';
 
   const imgElem = document.getElementById('lightbox-img');
@@ -376,7 +401,7 @@ function closeLightbox() {
 
   const videoElem = document.getElementById('lightbox-video');
   if (videoElem) {
-    videoElem.pause();
+    try { videoElem.pause(); } catch(e){}
     videoElem.removeAttribute('data-active-url');
     videoElem.src = '';
   }
@@ -413,37 +438,45 @@ function updateLightboxContent() {
   const item = mediaList[currentImageIndex];
   if (!item) return;
 
-  const isVid = item.isVideo || (item.url && item.url.includes('.mp4'));
+  const url = item.url || '';
+  const isVid = item.isVideo || url.includes('.mp4') || url.includes('/video/');
 
   if (isVid) {
     if (imgElem) {
       imgElem.classList.add('hidden');
+      imgElem.style.display = 'none';
       imgElem.classList.remove('zoomed');
       imgElem.removeAttribute('data-active-url');
     }
     if (videoElem) {
       videoElem.classList.remove('hidden');
-      if (videoElem.getAttribute('data-active-url') !== item.url) {
-        videoElem.setAttribute('data-active-url', item.url);
-        videoElem.src = item.url;
+      videoElem.style.display = 'block';
+      if (videoElem.getAttribute('data-active-url') !== url) {
+        videoElem.setAttribute('data-active-url', url);
+        videoElem.src = url;
         videoElem.load();
-        videoElem.play().catch(() => {});
+        const p = videoElem.play();
+        if (p !== undefined) {
+          p.catch(() => {});
+        }
       }
     }
   } else {
     if (videoElem) {
-      videoElem.pause();
+      try { videoElem.pause(); } catch(e){}
       videoElem.classList.add('hidden');
+      videoElem.style.display = 'none';
       videoElem.removeAttribute('data-active-url');
       videoElem.src = '';
     }
     if (imgElem) {
       imgElem.classList.remove('zoomed');
-      if (imgElem.getAttribute('data-active-url') !== item.url) {
-        imgElem.setAttribute('data-active-url', item.url);
-        imgElem.src = item.url;
+      if (imgElem.getAttribute('data-active-url') !== url) {
+        imgElem.setAttribute('data-active-url', url);
+        imgElem.src = url;
       }
       imgElem.classList.remove('hidden');
+      imgElem.style.display = 'block';
     }
   }
 
