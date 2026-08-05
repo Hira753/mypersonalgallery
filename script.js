@@ -14,6 +14,88 @@ window.navigateTo = function(url) {
   }, 150);
 };
 
+// Global unlock function for unlock.html page
+window.doUnlockMemory = function(e) {
+  if (e) {
+    if (e.preventDefault) e.preventDefault();
+    if (e.stopPropagation) e.stopPropagation();
+  }
+
+  const inputElem = document.getElementById('password-input');
+  const rawVal = inputElem ? inputElem.value : '';
+
+  // Normalize input
+  let norm = rawVal.trim().toLowerCase();
+  const urduDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+  urduDigits.forEach((d, idx) => {
+    norm = norm.replaceAll(d, idx.toString());
+  });
+  norm = norm.replace(/[,\.\-_\/]/g, ' ');
+  norm = norm.replace(/\s+/g, ' ').trim();
+  norm = norm.replace(/^03\b/, '3');
+  norm = norm.replace(/^3rd\b/, '3');
+  norm = norm.replace(/\bdecember\b/, 'dec');
+
+  // Accept any variation of Dec 3 (2025, 2026, 25, 26, or 3 dec)
+  const isDec3 = (norm.includes('3') || norm.includes('03')) && (norm.includes('dec') || norm.includes('12'));
+  const isValid = isDec3 ||
+    norm === '3 dec 2025' ||
+    norm === '3 dec 2026' ||
+    norm === '03 dec 2025' ||
+    norm === '03 dec 2026' ||
+    norm === '3 12 2025' ||
+    norm === '3 12 2026' ||
+    norm === '3/12/2025' ||
+    norm === '3/12/2026' ||
+    norm === '3-12-2025' ||
+    norm === '3-12-2026' ||
+    norm === '3dec2025' ||
+    norm === '3dec2026';
+
+  const err = document.getElementById('error-message');
+  const card = document.getElementById('lock-card');
+  const iconContainer = document.getElementById('lock-icon-container');
+  const lockIcn = document.getElementById('lock-icon');
+  const checkIcn = document.getElementById('check-icon');
+  const hdg = document.getElementById('unlock-heading');
+  const sub = document.getElementById('unlock-subtitle');
+
+  if (!isValid) {
+    if (err) {
+      err.textContent = 'Incorrect date! Only "3 dec 2025" can unlock this memory 🔒💖';
+      err.classList.remove('hidden');
+    }
+    if (card) {
+      card.classList.remove('shake');
+      void card.offsetWidth;
+      card.classList.add('shake');
+    }
+    return false;
+  }
+
+  // Success - Correct password entered!
+  if (err) err.classList.add('hidden');
+  if (card) card.classList.remove('shake');
+  
+  if (iconContainer) {
+    iconContainer.classList.add('unlock-success');
+  }
+  if (lockIcn) lockIcn.classList.add('hidden');
+  if (checkIcn) checkIcn.classList.remove('hidden');
+
+  if (hdg) hdg.textContent = 'Welcome, Zaibiii 🤍';
+  if (sub) sub.textContent = 'Opening your surprise...';
+
+  if (inputElem) inputElem.disabled = true;
+
+  // Immediate navigation to gallery.html
+  setTimeout(() => {
+    window.location.href = 'gallery.html';
+  }, 100);
+
+  return false;
+};
+
 // Initialize common features when DOM loads
 document.addEventListener('DOMContentLoaded', () => {
   initPetals();
@@ -119,114 +201,23 @@ function initUnlockPage() {
   const form = document.getElementById('unlock-form');
   const submitBtn = document.getElementById('unlock-submit-btn');
   const input = document.getElementById('password-input');
-  const errorMsg = document.getElementById('error-message');
-  const lockCard = document.getElementById('lock-card');
-  const lockIconContainer = document.getElementById('lock-icon-container');
-  const lockIcon = document.getElementById('lock-icon');
-  const checkIcon = document.getElementById('check-icon');
-  const heading = document.getElementById('unlock-heading');
-  const subtitle = document.getElementById('unlock-subtitle');
-
-  const doUnlock = (e) => {
-    if (e) {
-      if (e.preventDefault) e.preventDefault();
-      if (e.stopPropagation) e.stopPropagation();
-    }
-
-    const inputElem = document.getElementById('password-input') || input;
-    const rawVal = inputElem ? inputElem.value : '';
-
-    // Normalize input
-    let norm = rawVal.trim().toLowerCase();
-    const urduDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
-    urduDigits.forEach((d, idx) => {
-      norm = norm.replaceAll(d, idx.toString());
-    });
-    norm = norm.replace(/[,\.\-_\/]/g, ' ');
-    norm = norm.replace(/\s+/g, ' ').trim();
-    norm = norm.replace(/^03\b/, '3');
-    norm = norm.replace(/^3rd\b/, '3');
-    norm = norm.replace(/\bdecember\b/, 'dec');
-
-    // Check against 3 dec 2025
-    const isValid = (
-      norm === '3 dec 2025' ||
-      norm === '3 12 2025' ||
-      norm === '3dec2025' ||
-      norm === '3dec 2025' ||
-      norm === '03 dec 2025' ||
-      norm === '3/12/2025' ||
-      norm === '3-12-2025'
-    );
-
-    if (!isValid) {
-      const err = document.getElementById('error-message') || errorMsg;
-      const card = document.getElementById('lock-card') || lockCard;
-      if (err) {
-        err.textContent = 'Incorrect date! Only "3 dec 2025" can unlock this memory 🔒💖';
-        err.classList.remove('hidden');
-      }
-      if (card) {
-        card.classList.remove('shake');
-        void card.offsetWidth;
-        card.classList.add('shake');
-      }
-      return false;
-    }
-
-    // Success - Correct password entered!
-    const err = document.getElementById('error-message') || errorMsg;
-    const card = document.getElementById('lock-card') || lockCard;
-    const iconContainer = document.getElementById('lock-icon-container') || lockIconContainer;
-    const lockIcn = document.getElementById('lock-icon') || lockIcon;
-    const checkIcn = document.getElementById('check-icon') || checkIcon;
-    const hdg = document.getElementById('unlock-heading') || heading;
-    const sub = document.getElementById('unlock-subtitle') || subtitle;
-
-    if (err) err.classList.add('hidden');
-    if (card) card.classList.remove('shake');
-    
-    if (iconContainer) {
-      iconContainer.classList.add('unlock-success');
-    }
-    if (lockIcn) lockIcn.classList.add('hidden');
-    if (checkIcn) checkIcn.classList.remove('hidden');
-
-    if (hdg) hdg.textContent = 'Welcome, Zaibiii 🤍';
-    if (sub) sub.textContent = 'Opening your surprise...';
-
-    if (inputElem) inputElem.disabled = true;
-
-    // Direct navigate to gallery.html
-    setTimeout(() => {
-      if (typeof window.navigateTo === 'function') {
-        window.navigateTo('gallery.html');
-      } else {
-        window.location.href = 'gallery.html';
-      }
-    }, 200);
-
-    return false;
-  };
-
-  window.doUnlockMemory = doUnlock;
 
   if (form) {
     form.onsubmit = (e) => {
-      doUnlock(e);
+      if (window.doUnlockMemory) window.doUnlockMemory(e);
       return false;
     };
   }
   if (submitBtn) {
     submitBtn.onclick = (e) => {
-      doUnlock(e);
+      if (window.doUnlockMemory) window.doUnlockMemory(e);
       return false;
     };
   }
   if (input) {
     input.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
-        doUnlock(e);
+        if (window.doUnlockMemory) window.doUnlockMemory(e);
       }
     });
   }
