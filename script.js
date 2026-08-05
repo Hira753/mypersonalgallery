@@ -128,28 +128,58 @@ function initUnlockPage() {
   const subtitle = document.getElementById('unlock-subtitle');
 
   const doUnlock = (e) => {
-    if (e) e.preventDefault();
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
 
-    // Hide any previous error
+    const rawVal = input ? input.value : '';
+    const cleanVal = rawVal.trim().toLowerCase().replace(/\s+/g, ' ');
+
+    const validPasswords = [
+      '3 dec 2026',
+      '03 dec 2026',
+      '3 december 2026',
+      '03 december 2026',
+      '3-12-2026',
+      '03-12-2026',
+      '3/12/2026',
+      '03/12/2026'
+    ];
+
+    if (!validPasswords.includes(cleanVal)) {
+      if (errorMsg) {
+        errorMsg.textContent = 'Incorrect date! Only "3 dec 2026" can unlock this memory 🔒💖';
+        errorMsg.classList.remove('hidden');
+      }
+      if (lockCard) {
+        lockCard.classList.remove('shake');
+        void lockCard.offsetWidth; // trigger reflow for animation restart
+        lockCard.classList.add('shake');
+      }
+      return false;
+    }
+
+    // Success - Correct password entered
     if (errorMsg) errorMsg.classList.add('hidden');
     if (lockCard) lockCard.classList.remove('shake');
     
-    // Animate checkmark success
     if (lockIconContainer) {
       lockIconContainer.classList.add('unlock-success');
     }
     if (lockIcon) lockIcon.classList.add('hidden');
     if (checkIcon) checkIcon.classList.remove('hidden');
 
-    if (heading) heading.textContent = 'Welcome, Hubby 🤍';
+    if (heading) heading.textContent = 'Welcome, Zaibiii 🤍';
     if (subtitle) subtitle.textContent = 'Opening your surprise...';
 
     if (input) input.disabled = true;
 
-    // Immediately navigate to gallery.html
     setTimeout(() => {
       window.navigateTo('gallery.html');
-    }, 150);
+    }, 450);
+
+    return false;
   };
 
   form?.addEventListener('submit', doUnlock);
@@ -264,13 +294,18 @@ function initGalleryPage() {
 }
 
 /* --- LIGHTBOX MODAL --- */
+let isLightboxInitialized = false;
+
 function initLightbox() {
+  if (isLightboxInitialized) return;
   const backdrop = document.getElementById('lightbox-backdrop');
   const closeBtn = document.getElementById('lightbox-close');
   const prevBtn = document.getElementById('lightbox-prev');
   const nextBtn = document.getElementById('lightbox-next');
+  const imgElem = document.getElementById('lightbox-img');
 
   if (!backdrop) return;
+  isLightboxInitialized = true;
 
   closeBtn?.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -286,8 +321,18 @@ function initLightbox() {
   });
 
   backdrop.addEventListener('click', (e) => {
-    if (e.target === backdrop) closeLightbox();
+    if (e.target === backdrop || e.target.classList.contains('lightbox-content')) {
+      closeLightbox();
+    }
   });
+
+  // Tap or Click image to toggle zoom
+  if (imgElem) {
+    imgElem.addEventListener('click', (e) => {
+      e.stopPropagation();
+      imgElem.classList.toggle('zoomed');
+    });
+  }
 
   // Keyboard navigation
   document.addEventListener('keydown', (e) => {
@@ -321,6 +366,7 @@ function initLightbox() {
 }
 
 function openLightbox(index) {
+  initLightbox();
   const mediaList = getActiveMediaList();
   if (typeof index !== 'number' || index < 0 || index >= mediaList.length) {
     index = 0;
@@ -341,6 +387,9 @@ function closeLightbox() {
   const backdrop = document.getElementById('lightbox-backdrop');
   if (backdrop) backdrop.classList.remove('active');
   document.body.style.overflow = '';
+
+  const imgElem = document.getElementById('lightbox-img');
+  if (imgElem) imgElem.classList.remove('zoomed');
 
   const videoElem = document.getElementById('lightbox-video');
   if (videoElem) {
@@ -375,7 +424,10 @@ function updateLightboxContent() {
   const isVid = item.isVideo || (item.url && item.url.includes('.mp4'));
 
   if (isVid) {
-    if (imgElem) imgElem.classList.add('hidden');
+    if (imgElem) {
+      imgElem.classList.add('hidden');
+      imgElem.classList.remove('zoomed');
+    }
     if (videoElem) {
       videoElem.classList.remove('hidden');
       videoElem.src = item.url;
@@ -388,6 +440,7 @@ function updateLightboxContent() {
       videoElem.src = '';
     }
     if (imgElem) {
+      imgElem.classList.remove('zoomed');
       imgElem.src = item.url;
       imgElem.classList.remove('hidden');
     }
