@@ -17,6 +17,7 @@ export default defineConfig(() => {
           main: path.resolve(__dirname, 'index.html'),
           unlock: path.resolve(__dirname, 'unlock.html'),
           gallery: path.resolve(__dirname, 'gallery.html'),
+          memories: path.resolve(__dirname, 'memories.html'),
           final: path.resolve(__dirname, 'final.html'),
         },
       },

@@ -129,58 +129,78 @@ function initUnlockPage() {
 
   const doUnlock = (e) => {
     if (e) {
-      e.preventDefault();
-      e.stopPropagation();
+      if (e.preventDefault) e.preventDefault();
+      if (e.stopPropagation) e.stopPropagation();
     }
 
-    const rawVal = input ? input.value : '';
-    const cleanVal = rawVal.trim().toLowerCase().replace(/\s+/g, ' ');
+    const inputElem = document.getElementById('password-input') || input;
+    const rawVal = inputElem ? inputElem.value : '';
 
-    const validPasswords = [
-      '3 dec 2026',
-      '03 dec 2026',
-      '3 december 2026',
-      '03 december 2026',
-      '3-12-2026',
-      '03-12-2026',
-      '3/12/2026',
-      '03/12/2026'
-    ];
+    // Normalize input
+    let norm = rawVal.trim().toLowerCase();
+    const urduDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+    urduDigits.forEach((d, idx) => {
+      norm = norm.replaceAll(d, idx.toString());
+    });
+    norm = norm.replace(/[,\.\-_\/]/g, ' ');
+    norm = norm.replace(/\s+/g, ' ').trim();
+    norm = norm.replace(/^03\b/, '3');
+    norm = norm.replace(/^3rd\b/, '3');
+    norm = norm.replace(/\bdecember\b/, 'dec');
 
-    if (!validPasswords.includes(cleanVal)) {
-      if (errorMsg) {
-        errorMsg.textContent = 'Incorrect date! Only "3 dec 2026" can unlock this memory 🔒💖';
-        errorMsg.classList.remove('hidden');
+    const isValid = (
+      norm === '3 dec 2026' ||
+      norm === '3 12 2026' ||
+      norm === '3dec2026' ||
+      norm === '3dec 2026'
+    );
+
+    if (!isValid) {
+      const err = document.getElementById('error-message') || errorMsg;
+      const card = document.getElementById('lock-card') || lockCard;
+      if (err) {
+        err.textContent = 'Incorrect date! Only "3 dec 2026" can unlock this memory 🔒💖';
+        err.classList.remove('hidden');
       }
-      if (lockCard) {
-        lockCard.classList.remove('shake');
-        void lockCard.offsetWidth; // trigger reflow for animation restart
-        lockCard.classList.add('shake');
+      if (card) {
+        card.classList.remove('shake');
+        void card.offsetWidth;
+        card.classList.add('shake');
       }
       return false;
     }
 
-    // Success - Correct password entered
-    if (errorMsg) errorMsg.classList.add('hidden');
-    if (lockCard) lockCard.classList.remove('shake');
+    // Success - Correct password entered!
+    const err = document.getElementById('error-message') || errorMsg;
+    const card = document.getElementById('lock-card') || lockCard;
+    const iconContainer = document.getElementById('lock-icon-container') || lockIconContainer;
+    const lockIcn = document.getElementById('lock-icon') || lockIcon;
+    const checkIcn = document.getElementById('check-icon') || checkIcon;
+    const hdg = document.getElementById('unlock-heading') || heading;
+    const sub = document.getElementById('unlock-subtitle') || subtitle;
+
+    if (err) err.classList.add('hidden');
+    if (card) card.classList.remove('shake');
     
-    if (lockIconContainer) {
-      lockIconContainer.classList.add('unlock-success');
+    if (iconContainer) {
+      iconContainer.classList.add('unlock-success');
     }
-    if (lockIcon) lockIcon.classList.add('hidden');
-    if (checkIcon) checkIcon.classList.remove('hidden');
+    if (lockIcn) lockIcn.classList.add('hidden');
+    if (checkIcn) checkIcn.classList.remove('hidden');
 
-    if (heading) heading.textContent = 'Welcome, Zaibiii 🤍';
-    if (subtitle) subtitle.textContent = 'Opening your surprise...';
+    if (hdg) hdg.textContent = 'Welcome, Zaibiii 🤍';
+    if (sub) sub.textContent = 'Opening your surprise...';
 
-    if (input) input.disabled = true;
+    if (inputElem) inputElem.disabled = true;
 
     setTimeout(() => {
       window.navigateTo('gallery.html');
-    }, 450);
+    }, 250);
 
     return false;
   };
+
+  window.doUnlockMemory = doUnlock;
 
   form?.addEventListener('submit', doUnlock);
   submitBtn?.addEventListener('click', doUnlock);
