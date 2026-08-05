@@ -26,6 +26,11 @@ document.addEventListener('DOMContentLoaded', () => {
     window.navigateTo('unlock.html');
   });
 
+  document.getElementById('our-memories-btn')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.navigateTo('memories.html');
+  });
+
   document.getElementById('final-surprise-btn')?.addEventListener('click', (e) => {
     e.preventDefault();
     window.navigateTo('final.html');
@@ -40,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('unlock-form')) {
     initUnlockPage();
   }
-  if (document.getElementById('gallery-grid')) {
+  if (document.getElementById('gallery-grid') || document.getElementById('memories-grid')) {
     initGalleryPage();
   }
   if (document.getElementById('typewriter-container')) {
@@ -156,7 +161,7 @@ function initUnlockPage() {
  * ================================================== */
 // 30 High Quality Romantic Memories (Images & Videos)
 const galleryImages = [
-  { url: 'https://res.cloudinary.com/irbsm5bs/image/upload/v1785769359/Screenshot_2026-08-03_200055_oioh9w.png', isVideo: false, title: 'Precious Moments', desc: 'A beautiful memory with Hubby. 🤍' },
+  { url: 'https://res.cloudinary.com/irbsm5bs/image/upload/v1785769359/Screenshot_2026-08-03_200055_oioh9w.png', isVideo: false, title: 'Precious Moments', desc: 'A beautiful memory with Zaibiii. 🤍' },
   { url: 'https://res.cloudinary.com/irbsm5bs/image/upload/v1785769667/why_zaibii-2026-05-28T23-19-42_xjqyfs.jpg', isVideo: false, title: 'Why Zaibii', desc: 'Countless reasons why you mean everything to me. 💖' },
   { url: 'https://res.cloudinary.com/irbsm5bs/image/upload/v1785769415/Screenshot_2026-08-03_200156_bddugf.png', isVideo: false, title: 'Sweet Conversations', desc: 'Moments filled with love and warmth. 🌸' },
   { url: 'https://res.cloudinary.com/irbsm5bs/video/upload/v1785769941/zohaibsultan145_7565282984262208775_ntoy40.mp4', isVideo: true, title: 'Special Video Memory', desc: 'A cherished video clip of us. ✨' },
@@ -190,8 +195,40 @@ const galleryImages = [
 
 let currentImageIndex = 0;
 
+function getActiveMediaList() {
+  const grid = document.getElementById('gallery-grid') || document.getElementById('memories-grid');
+  if (!grid) return galleryImages;
+
+  const cards = grid.querySelectorAll('.gallery-card');
+  if (cards.length === 0) return galleryImages;
+
+  const isMemories = !!document.getElementById('memories-grid');
+  const list = [];
+  cards.forEach((card, idx) => {
+    const img = card.querySelector('img');
+    const video = card.querySelector('video');
+    if (img) {
+      list.push({
+        url: img.src,
+        isVideo: false,
+        title: isMemories ? `Chat Memory #${idx + 1}` : (galleryImages[idx]?.title || `Memory #${idx + 1}`),
+        desc: isMemories ? `Special chat screenshot saved forever. 💬🤍` : (galleryImages[idx]?.desc || `A beautiful memory with Zaibiii. 🌸`)
+      });
+    } else if (video) {
+      list.push({
+        url: video.src,
+        isVideo: true,
+        title: galleryImages[idx]?.title || `Video Memory #${idx + 1}`,
+        desc: galleryImages[idx]?.desc || `Unforgettable video memory. ✨`
+      });
+    }
+  });
+
+  return list.length > 0 ? list : galleryImages;
+}
+
 function initGalleryPage() {
-  const grid = document.getElementById('gallery-grid');
+  const grid = document.getElementById('gallery-grid') || document.getElementById('memories-grid');
   if (!grid) return;
 
   // Bind click listener directly to every card
@@ -284,7 +321,8 @@ function initLightbox() {
 }
 
 function openLightbox(index) {
-  if (typeof index !== 'number' || index < 0 || index >= galleryImages.length) {
+  const mediaList = getActiveMediaList();
+  if (typeof index !== 'number' || index < 0 || index >= mediaList.length) {
     index = 0;
   }
   currentImageIndex = index;
@@ -293,6 +331,7 @@ function openLightbox(index) {
   const backdrop = document.getElementById('lightbox-backdrop');
   if (backdrop) {
     backdrop.classList.add('active');
+    document.body.style.overflow = 'hidden';
   }
 }
 
@@ -301,6 +340,7 @@ window.openLightbox = openLightbox;
 function closeLightbox() {
   const backdrop = document.getElementById('lightbox-backdrop');
   if (backdrop) backdrop.classList.remove('active');
+  document.body.style.overflow = '';
 
   const videoElem = document.getElementById('lightbox-video');
   if (videoElem) {
@@ -310,12 +350,14 @@ function closeLightbox() {
 }
 
 function showPrevImage() {
-  currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+  const mediaList = getActiveMediaList();
+  currentImageIndex = (currentImageIndex - 1 + mediaList.length) % mediaList.length;
   updateLightboxContent();
 }
 
 function showNextImage() {
-  currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+  const mediaList = getActiveMediaList();
+  currentImageIndex = (currentImageIndex + 1) % mediaList.length;
   updateLightboxContent();
 }
 
@@ -326,8 +368,11 @@ function updateLightboxContent() {
   const descElem = document.getElementById('lightbox-desc');
   const counterElem = document.getElementById('lightbox-counter');
 
-  const item = galleryImages[currentImageIndex];
-  const isVid = item.isVideo || item.url.includes('.mp4');
+  const mediaList = getActiveMediaList();
+  const item = mediaList[currentImageIndex];
+  if (!item) return;
+
+  const isVid = item.isVideo || (item.url && item.url.includes('.mp4'));
 
   if (isVid) {
     if (imgElem) imgElem.classList.add('hidden');
@@ -343,16 +388,14 @@ function updateLightboxContent() {
       videoElem.src = '';
     }
     if (imgElem) {
-      imgElem.classList.remove('hidden');
-      imgElem.style.opacity = '0.4';
       imgElem.src = item.url;
-      setTimeout(() => imgElem.style.opacity = '1', 150);
+      imgElem.classList.remove('hidden');
     }
   }
 
-  if (titleElem) titleElem.textContent = item.title;
-  if (descElem) descElem.textContent = item.desc;
-  if (counterElem) counterElem.textContent = `${currentImageIndex + 1} of ${galleryImages.length}`;
+  if (titleElem) titleElem.textContent = item.title || '';
+  if (descElem) descElem.textContent = item.desc || '';
+  if (counterElem) counterElem.textContent = `${currentImageIndex + 1} / ${mediaList.length}`;
 }
 
 /* ==================================================

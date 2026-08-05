@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Memories - Zaibiiii 💬💖</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-[#FCEEF5] min-h-screen relative pb-20 font-sans">
+
+  <!-- Soft Gradient Vignette -->
+  <div class="pointer-events-none fixed inset-0 bg-gradient-to-b from-white/20 via-transparent to-[#D8A7B1]/10 z-0"></div>
+
+  <!-- Main Container -->
+  <main id="memories-main" class="relative z-10 max-w-6xl mx-auto px-3 sm:px-6 py-8 md:py-12 transition-all duration-500">
+    
+    <!-- Header Title -->
+    <header class="text-center mb-8 md:mb-12">
+      <div class="mb-3 space-y-2">
+        <span class="block text-[11px] uppercase tracking-[0.4em] text-[#991B47] font-bold opacity-100">
+          Chat Memories & Screenshots
+        </span>
+        <div class="h-[1.5px] w-14 bg-[#991B47] mx-auto opacity-70"></div>
+      </div>
+      <h1 class="font-serif text-3xl sm:text-5xl md:text-6xl italic font-bold text-[#881337] mb-3 tracking-tight drop-shadow-sm">
+        Our Memories 💬💖
+      </h1>
+      <p class="font-sans text-xs sm:text-sm text-[#701A33] max-w-md mx-auto font-medium">
+        Special chat screenshots & sweet moments we saved forever. Tap any picture to view full size!
+      </p>
+    </header>
+
+    <!-- 30 CHAT MEMORIES GRID -->
+    <section>
+      <div class="gallery-grid-container" id="memories-grid">
+        <div class="gallery-card" data-index="0" onclick="openLightbox(0)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785769359/Screenshot_2026-08-03_200055_oioh9w.png" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+        <div class="gallery-card" data-index="1" onclick="openLightbox(1)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785769667/why_zaibii-2026-05-28T23-19-42_xjqyfs.jpg" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+        <div class="gallery-card" data-index="2" onclick="openLightbox(2)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785769415/Screenshot_2026-08-03_200156_bddugf.png" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+        <div class="gallery-card" data-index="3" onclick="openLightbox(3)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785770541/Screenshot_2026-08-03_202015_htazvo.png" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+        <div class="gallery-card" data-index="4" onclick="openLightbox(4)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785770613/ChatGPT_Image_Aug_3_2026_08_21_50_PM_odamjy.png" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+        <div class="gallery-card" data-index="5" onclick="openLightbox(5)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785771210/ChatGPT_Image_Aug_3_2026_08_31_46_PM_mhhs0c.png" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+        <div class="gallery-card" data-index="6" onclick="openLightbox(6)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785770335/758350395_17954020074197793_7502221706327146486_n_code8f.jpg" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+        <div class="gallery-card" data-index="7" onclick="openLightbox(7)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785780527/WhatsApp_Image_2026-08-03_at_10.10.16_PM_mlh5la.jpg" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+        <div class="gallery-card" data-index="8" onclick="openLightbox(8)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785781932/Screenshot_2026-08-03_233031_jncmbt.png" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+        <div class="gallery-card" data-index="9" onclick="openLightbox(9)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785784023/Screenshot_2026-08-04_000500_rqskse.png" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+        <div class="gallery-card" data-index="10" onclick="openLightbox(10)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785781754/Screenshot_2026-08-03_232723_hwgldq.png" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+        <div class="gallery-card" data-index="11" onclick="openLightbox(11)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785769359/Screenshot_2026-08-03_200055_oioh9w.png" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+        <div class="gallery-card" data-index="12" onclick="openLightbox(12)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785769667/why_zaibii-2026-05-28T23-19-42_xjqyfs.jpg" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+        <div class="gallery-card" data-index="13" onclick="openLightbox(13)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785769415/Screenshot_2026-08-03_200156_bddugf.png" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+        <div class="gallery-card" data-index="14" onclick="openLightbox(14)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785770541/Screenshot_2026-08-03_202015_htazvo.png" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+        <div class="gallery-card" data-index="15" onclick="openLightbox(15)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785770613/ChatGPT_Image_Aug_3_2026_08_21_50_PM_odamjy.png" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+        <div class="gallery-card" data-index="16" onclick="openLightbox(16)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785771210/ChatGPT_Image_Aug_3_2026_08_31_46_PM_mhhs0c.png" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+        <div class="gallery-card" data-index="17" onclick="openLightbox(17)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785770335/758350395_17954020074197793_7502221706327146486_n_code8f.jpg" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+        <div class="gallery-card" data-index="18" onclick="openLightbox(18)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785780527/WhatsApp_Image_2026-08-03_at_10.10.16_PM_mlh5la.jpg" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+        <div class="gallery-card" data-index="19" onclick="openLightbox(19)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785781932/Screenshot_2026-08-03_233031_jncmbt.png" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+        <div class="gallery-card" data-index="20" onclick="openLightbox(20)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785784023/Screenshot_2026-08-04_000500_rqskse.png" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+        <div class="gallery-card" data-index="21" onclick="openLightbox(21)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785781754/Screenshot_2026-08-03_232723_hwgldq.png" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+        <div class="gallery-card" data-index="22" onclick="openLightbox(22)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785769359/Screenshot_2026-08-03_200055_oioh9w.png" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+        <div class="gallery-card" data-index="23" onclick="openLightbox(23)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785769667/why_zaibii-2026-05-28T23-19-42_xjqyfs.jpg" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+        <div class="gallery-card" data-index="24" onclick="openLightbox(24)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785769415/Screenshot_2026-08-03_200156_bddugf.png" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+        <div class="gallery-card" data-index="25" onclick="openLightbox(25)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785770541/Screenshot_2026-08-03_202015_htazvo.png" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+        <div class="gallery-card" data-index="26" onclick="openLightbox(26)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785770613/ChatGPT_Image_Aug_3_2026_08_21_50_PM_odamjy.png" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+        <div class="gallery-card" data-index="27" onclick="openLightbox(27)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785771210/ChatGPT_Image_Aug_3_2026_08_31_46_PM_mhhs0c.png" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+        <div class="gallery-card" data-index="28" onclick="openLightbox(28)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785770335/758350395_17954020074197793_7502221706327146486_n_code8f.jpg" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+        <div class="gallery-card" data-index="29" onclick="openLightbox(29)">
+          <img src="https://res.cloudinary.com/irbsm5bs/image/upload/v1785781932/Screenshot_2026-08-03_233031_jncmbt.png" alt="Chat Memory" loading="eager" referrerPolicy="no-referrer" />
+        </div>
+      </div>
+    </section>
+
+    <!-- End of Memories Button -> Leads to Our Last Message -->
+    <div class="mt-14 md:mt-20 text-center relative z-20">
+      <a 
+        href="final.html"
+        onclick="navigateTo('final.html'); return false;" 
+        class="btn-luxury text-sm sm:text-base uppercase tracking-[0.2em] px-8 py-4.5 cursor-pointer shadow-xl relative z-10 pointer-events-auto inline-flex items-center justify-center text-decoration-none"
+        id="final-surprise-btn">
+        <span>🌸 Our Last Message 🤍</span>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- LIGHTBOX FULLSCREEN MODAL -->
+  <div id="lightbox-backdrop" class="lightbox-backdrop">
+    <button id="lightbox-close" class="absolute top-5 right-5 text-white/90 hover:text-white bg-white/20 hover:bg-white/30 w-11 h-11 rounded-full flex items-center justify-center text-xl transition-all z-20 cursor-pointer">
+      ✕
+    </button>
+    <button id="lightbox-prev" class="absolute left-3 md:left-8 top-1/2 -translate-y-1/2 text-white/90 hover:text-white bg-white/20 hover:bg-white/30 w-11 h-11 rounded-full flex items-center justify-center text-2xl transition-all z-20 cursor-pointer">
+      ‹
+    </button>
+    <button id="lightbox-next" class="absolute right-3 md:right-8 top-1/2 -translate-y-1/2 text-white/90 hover:text-white bg-white/20 hover:bg-white/30 w-11 h-11 rounded-full flex items-center justify-center text-2xl transition-all z-20 cursor-pointer">
+      ›
+    </button>
+
+    <div class="lightbox-content text-center">
+      <img id="lightbox-img" src="" alt="" class="lightbox-img mb-4 hidden" referrerPolicy="no-referrer" />
+      <video id="lightbox-video" src="" controls autoplay playsinline class="lightbox-img mb-4 hidden"></video>
+      <div id="lightbox-title" class="font-serif italic text-xl sm:text-2xl font-semibold text-pink-100 mb-1"></div>
+      <div id="lightbox-desc" class="font-sans text-xs sm:text-sm text-pink-200/90 max-w-lg mx-auto mb-2 font-light"></div>
+      <div id="lightbox-counter" class="font-sans text-xs text-pink-300/70 font-light tracking-widest uppercase"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

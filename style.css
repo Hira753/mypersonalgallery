@@ -396,18 +396,18 @@ button, input, a, .gallery-card, .btn-luxury, .btn-outline-luxury {
 .lightbox-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(40, 25, 32, 0.95);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  z-index: 9999 !important;
+  background: rgba(20, 10, 15, 0.96);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  z-index: 99999 !important;
   display: none;
   visibility: hidden;
   align-items: center;
   justify-content: center;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.35s ease;
-  padding: 16px;
+  transition: opacity 0.3s ease;
+  padding: 12px;
 }
 
 .lightbox-backdrop.active {
@@ -419,19 +419,23 @@ button, input, a, .gallery-card, .btn-luxury, .btn-outline-luxury {
 
 .lightbox-content {
   position: relative;
-  max-width: 90vw;
-  max-height: 85vh;
+  width: 100%;
+  max-width: 96vw;
+  max-height: 94vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .lightbox-img {
-  max-width: 100%;
-  max-height: 75vh;
+  max-width: 95vw;
+  max-height: 80vh;
+  width: auto;
+  height: auto;
   object-fit: contain;
-  border-radius: 16px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  border-radius: 14px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
   transition: transform 0.2s ease;
 }
 
@@ -551,12 +555,8 @@ button, input, a, .gallery-card, .btn-luxury, .btn-outline-luxury {
 }
 
 .shimmer-text {
-  background: linear-gradient(90deg, #881337 0%, #E11D48 50%, #881337 100%);
-  background-size: 200% auto;
-  color: transparent;
-  -webkit-background-clip: text;
-  background-clip: text;
-  animation: shimmer 4s linear infinite;
+  color: #881337;
+  display: inline-block;
 }
 
 @keyframes shimmer {
