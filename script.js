@@ -14,6 +14,14 @@ window.navigateTo = function(url) {
   }, 150);
 };
 
+// Declare and attach global lightbox handlers to window immediately
+window.openLightbox = openLightbox;
+window.closeLightbox = closeLightbox;
+window.showPrevImage = showPrevImage;
+window.showNextImage = showNextImage;
+window.initGalleryPage = initGalleryPage;
+window.initLightbox = initLightbox;
+
 // Global start/unlock handler for unlock.html page
 function handleStart(e) {
   if (e) {
@@ -55,9 +63,11 @@ document.addEventListener('click', (e) => {
     const idxAttr = card.getAttribute('data-index');
     if (idxAttr !== null) {
       window.openLightbox(idxAttr);
+    } else {
+      window.openLightbox(card);
     }
   }
-}, true);
+});
 
 // Initialize common features when DOM loads (or immediately if already parsed)
 function runInit() {
