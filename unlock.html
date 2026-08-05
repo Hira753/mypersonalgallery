@@ -49,41 +49,16 @@
 
       <!-- Subtitle -->
       <p class="font-sans text-xs sm:text-sm text-[#701A33] mb-8 font-normal leading-relaxed" id="unlock-subtitle">
-        The key isn't a password...<br />
-        <span class="font-semibold text-[#881337]">It's the date our story first began.</span>
+        Click Start to view your special surprise 💖
       </p>
 
-      <!-- Form -->
-      <form id="unlock-form" class="space-y-4 relative z-30" onsubmit="if(window.handleUnlock){ window.handleUnlock(event); } return false;">
+      <!-- Start Button Action -->
+      <div class="space-y-4 relative z-30">
         <div>
-          <input 
-            type="text" 
-            id="password-input" 
-            class="input-luxury relative z-30" 
-            placeholder="Enter the special date..." 
-            autocomplete="off"
-            autofocus
-          />
-        </div>
-
-        <!-- Wrong Password Error Message -->
-        <div id="error-message" class="hidden text-xs sm:text-sm font-medium text-rose-600 bg-pink-100/90 py-2.5 px-4 rounded-xl border border-pink-300/50 leading-relaxed">
-          Not quite...<br />Think about the day we first talked.
-        </div>
-
-        <!-- Submit Button -->
-        <div>
-          <button type="button" id="unlock-submit-btn" onclick="if(window.handleUnlock){ window.handleUnlock(event); }" class="btn-luxury w-full py-4 text-sm uppercase tracking-[0.15em] font-medium mt-2 cursor-pointer relative z-30 pointer-events-auto select-none">
-            Unlock Memory 🌸
+          <button type="button" id="start-btn" onclick="if(window.handleStart){ window.handleStart(event); } else { window.location.href='gallery.html'; }" class="btn-luxury w-full py-4 text-sm uppercase tracking-[0.2em] font-bold mt-2 cursor-pointer relative z-30 pointer-events-auto select-none">
+            START 🌸
           </button>
         </div>
-      </form>
-
-      <!-- Hint Section -->
-      <div class="mt-8 pt-6 border-t border-[#991B47]/30">
-        <p class="text-xs text-[#881337] font-medium italic">
-          💡 Hint: The day we first talked.
-        </p>
       </div>
 
     </div>

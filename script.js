@@ -14,98 +14,39 @@ window.navigateTo = function(url) {
   }, 150);
 };
 
-// Global unlock handler for unlock.html page - COMPLETELY REWRITTEN FROM SCRATCH
-function handleUnlock(e) {
+// Global start/unlock handler for unlock.html page
+function handleStart(e) {
   if (e) {
     if (typeof e.preventDefault === 'function') e.preventDefault();
     if (typeof e.stopPropagation === 'function') e.stopPropagation();
   }
 
-  const inputElem = document.getElementById('password-input');
-  if (!inputElem) return false;
-
-  // 1. Read the password input
-  const rawVal = inputElem.value || '';
-
-  // 2. Remove extra spaces from beginning & end, ignore case
-  const cleanVal = rawVal.trim().toLowerCase();
-  const normalizedVal = cleanVal.replace(/\s+/g, ' ');
-
-  // 3. Accepted formats:
-  // 3 Dec 2025, 03 Dec 2025, 3 December 2025, 03 December 2025,
-  // 3 dec 2025, 03 dec 2025, 3 december 2025, 03 december 2025
-  const acceptedFormats = [
-    '3 dec 2025',
-    '03 dec 2025',
-    '3 december 2025',
-    '03 december 2025'
-  ];
-
-  const isValid = acceptedFormats.includes(normalizedVal);
-
-  const cardElem = document.getElementById('lock-card');
-  const errElem = document.getElementById('error-message');
   const lockIconContainer = document.getElementById('lock-icon-container');
   const lockIcon = document.getElementById('lock-icon');
   const checkIcon = document.getElementById('check-icon');
   const headingElem = document.getElementById('unlock-heading');
   const subtitleElem = document.getElementById('unlock-subtitle');
+  const startBtn = document.getElementById('start-btn') || document.getElementById('unlock-submit-btn');
 
-  if (isValid) {
-    // Hide error message
-    if (errElem) errElem.classList.add('hidden');
-    if (cardElem) cardElem.classList.remove('shake');
-    if (inputElem) {
-      inputElem.classList.remove('shake');
-      inputElem.disabled = true;
-    }
+  if (startBtn) startBtn.disabled = true;
 
-    // Play unlock animation & replace lock icon with animated checkmark
-    if (lockIconContainer) {
-      lockIconContainer.classList.add('unlock-success');
-    }
-    if (lockIcon) lockIcon.classList.add('hidden');
-    if (checkIcon) checkIcon.classList.remove('hidden');
+  if (lockIconContainer) lockIconContainer.classList.add('unlock-success');
+  if (lockIcon) lockIcon.classList.add('hidden');
+  if (checkIcon) checkIcon.classList.remove('hidden');
 
-    // Show: Welcome, Zaibiiii 🤍 / Your surprise is waiting...
-    if (headingElem) {
-      headingElem.textContent = 'Welcome, Zaibiiii 🤍';
-    }
-    if (subtitleElem) {
-      subtitleElem.innerHTML = 'Your surprise is waiting...';
-    }
+  if (headingElem) headingElem.textContent = 'Welcome, Zaibiiii 🤍';
+  if (subtitleElem) subtitleElem.textContent = 'Opening your surprise...';
 
-    // Wait exactly 1.5 seconds, then automatically navigate to gallery.html
-    setTimeout(() => {
-      window.location.href = "gallery.html";
-    }, 1500);
-
-  } else {
-    // Shake input field and card
-    if (inputElem) {
-      inputElem.classList.remove('shake');
-      void inputElem.offsetWidth;
-      inputElem.classList.add('shake');
-    }
-    if (cardElem) {
-      cardElem.classList.remove('shake');
-      void cardElem.offsetWidth;
-      cardElem.classList.add('shake');
-    }
-
-    // Show incorrect message:
-    // Not quite... Think about the day we first talked.
-    if (errElem) {
-      errElem.innerHTML = 'Not quite...<br>Think about the day we first talked.';
-      errElem.classList.remove('hidden');
-    }
-  }
+  setTimeout(() => {
+    window.location.href = "gallery.html";
+  }, 300);
 
   return false;
 }
 
-window.handleUnlock = handleUnlock;
-window.doUnlockMemory = handleUnlock;
+window.handleStart = handleStart;
+window.handleUnlock = handleStart;
+window.doUnlockMemory = handleStart;
 
 // Initialize common features when DOM loads
 document.addEventListener('DOMContentLoaded', () => {
@@ -206,27 +147,14 @@ function initPageTransitions() {
 }
 
 /* ==================================================
- * 3. PAGE 2: PASSWORD PAGE UNLOCK LOGIC
+ * 3. PAGE 2: START / UNLOCK PAGE LOGIC
  * ================================================== */
 function initUnlockPage() {
-  const form = document.getElementById('unlock-form');
-  const submitBtn = document.getElementById('unlock-submit-btn');
-  const input = document.getElementById('password-input');
+  const startBtn = document.getElementById('start-btn') || document.getElementById('unlock-submit-btn');
 
-  if (form) {
-    form.onsubmit = (e) => handleUnlock(e);
-    form.addEventListener('submit', (e) => handleUnlock(e));
-  }
-  if (submitBtn) {
-    submitBtn.onclick = (e) => handleUnlock(e);
-    submitBtn.addEventListener('click', (e) => handleUnlock(e));
-  }
-  if (input) {
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        handleUnlock(e);
-      }
-    });
+  if (startBtn) {
+    startBtn.onclick = (e) => handleStart(e);
+    startBtn.addEventListener('click', (e) => handleStart(e));
   }
 }
 
