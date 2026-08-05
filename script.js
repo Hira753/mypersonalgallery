@@ -47,6 +47,11 @@ function handleStart(e) {
 window.handleStart = handleStart;
 window.handleUnlock = handleStart;
 window.doUnlockMemory = handleStart;
+window.openLightbox = function(idx) {
+  if (typeof openLightbox === 'function') {
+    openLightbox(idx);
+  }
+};
 
 // Initialize common features when DOM loads
 document.addEventListener('DOMContentLoaded', () => {
@@ -353,8 +358,6 @@ function openLightbox(index) {
   }
 }
 
-window.openLightbox = openLightbox;
-
 function closeLightbox() {
   const backdrop = document.getElementById('lightbox-backdrop');
   if (backdrop) backdrop.classList.remove('active');
@@ -381,6 +384,12 @@ function showNextImage() {
   currentImageIndex = (currentImageIndex + 1) % mediaList.length;
   updateLightboxContent();
 }
+
+// Ensure all lightbox functions are attached to window
+window.openLightbox = openLightbox;
+window.closeLightbox = closeLightbox;
+window.showPrevImage = showPrevImage;
+window.showNextImage = showNextImage;
 
 function updateLightboxContent() {
   const imgElem = document.getElementById('lightbox-img');
@@ -424,75 +433,28 @@ function updateLightboxContent() {
 }
 
 /* ==================================================
- * 5. PAGE 4: FINAL SURPRISE TYPEWRITER & REVEAL
+ * 5. PAGE 4: FINAL SURPRISE PAGE LOGIC
  * ================================================== */
 function initFinalPage() {
-  const lines = ['Today.', 'Tomorrow.', 'Forever.'];
   const lineContainer = document.getElementById('typewriter-container');
   const letterContent = document.getElementById('letter-content');
 
   if (!lineContainer) return;
 
-  let isRevealed = false;
-  let timerId = null;
+  const lines = ['Today.', 'Tomorrow.', 'Forever.'];
 
-  function revealLetter() {
-    if (isRevealed) return;
-    isRevealed = true;
-    if (timerId) clearTimeout(timerId);
-
-    // Populate lines cleanly if not fully typed
+  // If for any reason lines aren't in container, inject them directly
+  if (lineContainer.children.length === 0) {
     lineContainer.innerHTML = '';
     lines.forEach(text => {
       const p = document.createElement('p');
-      p.className = 'font-serif text-3xl md:text-5xl font-bold text-rose-accent my-2';
+      p.className = 'font-serif text-2xl sm:text-4xl font-bold text-[#881337] my-1 tracking-wide drop-shadow-sm';
       p.textContent = text;
       lineContainer.appendChild(p);
     });
-
-    if (letterContent) {
-      letterContent.classList.remove('hidden');
-      letterContent.classList.add('page-fade-in');
-    }
   }
 
-  // Bind click handler anywhere on container to reveal letter instantly if clicked
-  lineContainer.addEventListener('click', revealLetter);
-
-  let lineIdx = 0;
-
-  function typeLine() {
-    if (isRevealed) return;
-
-    if (lineIdx >= lines.length) {
-      // Finished typing lines, reveal letter content automatically
-      timerId = setTimeout(revealLetter, 300);
-      return;
-    }
-
-    const lineText = lines[lineIdx];
-    const p = document.createElement('p');
-    p.className = 'font-serif text-3xl md:text-5xl font-bold text-rose-accent my-2 typewriter-line';
-    lineContainer.appendChild(p);
-
-    let charIdx = 0;
-    const interval = setInterval(() => {
-      if (isRevealed) {
-        clearInterval(interval);
-        return;
-      }
-      if (charIdx < lineText.length) {
-        p.textContent = lineText.substring(0, charIdx + 1);
-        charIdx++;
-      } else {
-        clearInterval(interval);
-        p.style.borderRight = 'none'; // remove cursor on complete line
-        lineIdx++;
-        timerId = setTimeout(typeLine, 400);
-      }
-    }, 90);
+  if (letterContent) {
+    letterContent.classList.remove('hidden');
   }
-
-  // Start typewriter after 200ms
-  timerId = setTimeout(typeLine, 200);
 }
