@@ -47,11 +47,6 @@ function handleStart(e) {
 window.handleStart = handleStart;
 window.handleUnlock = handleStart;
 window.doUnlockMemory = handleStart;
-window.openLightbox = function(idx) {
-  if (typeof openLightbox === 'function') {
-    openLightbox(idx);
-  }
-};
 
 // Initialize common features when DOM loads
 document.addEventListener('DOMContentLoaded', () => {
