@@ -14,87 +14,98 @@ window.navigateTo = function(url) {
   }, 150);
 };
 
-// Global unlock function for unlock.html page
-window.doUnlockMemory = function(e) {
+// Global unlock handler for unlock.html page - COMPLETELY REWRITTEN FROM SCRATCH
+function handleUnlock(e) {
   if (e) {
-    if (e.preventDefault) e.preventDefault();
-    if (e.stopPropagation) e.stopPropagation();
+    if (typeof e.preventDefault === 'function') e.preventDefault();
+    if (typeof e.stopPropagation === 'function') e.stopPropagation();
   }
 
   const inputElem = document.getElementById('password-input');
-  const rawVal = inputElem ? inputElem.value : '';
+  if (!inputElem) return false;
 
-  // Normalize input
-  let norm = rawVal.trim().toLowerCase();
-  const urduDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
-  urduDigits.forEach((d, idx) => {
-    norm = norm.replaceAll(d, idx.toString());
-  });
-  norm = norm.replace(/[,\.\-_\/]/g, ' ');
-  norm = norm.replace(/\s+/g, ' ').trim();
-  norm = norm.replace(/^03\b/, '3');
-  norm = norm.replace(/^3rd\b/, '3');
-  norm = norm.replace(/\bdecember\b/, 'dec');
+  // 1. Read the password input
+  const rawVal = inputElem.value || '';
 
-  // Accept any variation of Dec 3 (2025, 2026, 25, 26, or 3 dec)
-  const isDec3 = (norm.includes('3') || norm.includes('03')) && (norm.includes('dec') || norm.includes('12'));
-  const isValid = isDec3 ||
-    norm === '3 dec 2025' ||
-    norm === '3 dec 2026' ||
-    norm === '03 dec 2025' ||
-    norm === '03 dec 2026' ||
-    norm === '3 12 2025' ||
-    norm === '3 12 2026' ||
-    norm === '3/12/2025' ||
-    norm === '3/12/2026' ||
-    norm === '3-12-2025' ||
-    norm === '3-12-2026' ||
-    norm === '3dec2025' ||
-    norm === '3dec2026';
+  // 2. Remove extra spaces from beginning & end, ignore case
+  const cleanVal = rawVal.trim().toLowerCase();
+  const normalizedVal = cleanVal.replace(/\s+/g, ' ');
 
-  const err = document.getElementById('error-message');
-  const card = document.getElementById('lock-card');
-  const iconContainer = document.getElementById('lock-icon-container');
-  const lockIcn = document.getElementById('lock-icon');
-  const checkIcn = document.getElementById('check-icon');
-  const hdg = document.getElementById('unlock-heading');
-  const sub = document.getElementById('unlock-subtitle');
+  // 3. Accepted formats:
+  // 3 Dec 2025, 03 Dec 2025, 3 December 2025, 03 December 2025,
+  // 3 dec 2025, 03 dec 2025, 3 december 2025, 03 december 2025
+  const acceptedFormats = [
+    '3 dec 2025',
+    '03 dec 2025',
+    '3 december 2025',
+    '03 december 2025'
+  ];
 
-  if (!isValid) {
-    if (err) {
-      err.textContent = 'Incorrect date! Only "3 dec 2025" can unlock this memory 🔒💖';
-      err.classList.remove('hidden');
+  const isValid = acceptedFormats.includes(normalizedVal);
+
+  const cardElem = document.getElementById('lock-card');
+  const errElem = document.getElementById('error-message');
+  const lockIconContainer = document.getElementById('lock-icon-container');
+  const lockIcon = document.getElementById('lock-icon');
+  const checkIcon = document.getElementById('check-icon');
+  const headingElem = document.getElementById('unlock-heading');
+  const subtitleElem = document.getElementById('unlock-subtitle');
+
+  if (isValid) {
+    // Hide error message
+    if (errElem) errElem.classList.add('hidden');
+    if (cardElem) cardElem.classList.remove('shake');
+    if (inputElem) {
+      inputElem.classList.remove('shake');
+      inputElem.disabled = true;
     }
-    if (card) {
-      card.classList.remove('shake');
-      void card.offsetWidth;
-      card.classList.add('shake');
+
+    // Play unlock animation & replace lock icon with animated checkmark
+    if (lockIconContainer) {
+      lockIconContainer.classList.add('unlock-success');
     }
-    return false;
+    if (lockIcon) lockIcon.classList.add('hidden');
+    if (checkIcon) checkIcon.classList.remove('hidden');
+
+    // Show: Welcome, Zaibiiii 🤍 / Your surprise is waiting...
+    if (headingElem) {
+      headingElem.textContent = 'Welcome, Zaibiiii 🤍';
+    }
+    if (subtitleElem) {
+      subtitleElem.innerHTML = 'Your surprise is waiting...';
+    }
+
+    // Wait exactly 1.5 seconds, then automatically navigate to gallery.html
+    setTimeout(() => {
+      window.location.href = "gallery.html";
+    }, 1500);
+
+  } else {
+    // Shake input field and card
+    if (inputElem) {
+      inputElem.classList.remove('shake');
+      void inputElem.offsetWidth;
+      inputElem.classList.add('shake');
+    }
+    if (cardElem) {
+      cardElem.classList.remove('shake');
+      void cardElem.offsetWidth;
+      cardElem.classList.add('shake');
+    }
+
+    // Show incorrect message:
+    // Not quite... Think about the day we first talked.
+    if (errElem) {
+      errElem.innerHTML = 'Not quite...<br>Think about the day we first talked.';
+      errElem.classList.remove('hidden');
+    }
   }
-
-  // Success - Correct password entered!
-  if (err) err.classList.add('hidden');
-  if (card) card.classList.remove('shake');
-  
-  if (iconContainer) {
-    iconContainer.classList.add('unlock-success');
-  }
-  if (lockIcn) lockIcn.classList.add('hidden');
-  if (checkIcn) checkIcn.classList.remove('hidden');
-
-  if (hdg) hdg.textContent = 'Welcome, Zaibiii 🤍';
-  if (sub) sub.textContent = 'Opening your surprise...';
-
-  if (inputElem) inputElem.disabled = true;
-
-  // Immediate navigation to gallery.html
-  setTimeout(() => {
-    window.location.href = 'gallery.html';
-  }, 100);
 
   return false;
-};
+}
+
+window.handleUnlock = handleUnlock;
+window.doUnlockMemory = handleUnlock;
 
 // Initialize common features when DOM loads
 document.addEventListener('DOMContentLoaded', () => {
@@ -203,21 +214,17 @@ function initUnlockPage() {
   const input = document.getElementById('password-input');
 
   if (form) {
-    form.onsubmit = (e) => {
-      if (window.doUnlockMemory) window.doUnlockMemory(e);
-      return false;
-    };
+    form.onsubmit = (e) => handleUnlock(e);
+    form.addEventListener('submit', (e) => handleUnlock(e));
   }
   if (submitBtn) {
-    submitBtn.onclick = (e) => {
-      if (window.doUnlockMemory) window.doUnlockMemory(e);
-      return false;
-    };
+    submitBtn.onclick = (e) => handleUnlock(e);
+    submitBtn.addEventListener('click', (e) => handleUnlock(e));
   }
   if (input) {
     input.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
-        if (window.doUnlockMemory) window.doUnlockMemory(e);
+        handleUnlock(e);
       }
     });
   }
